@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>HELIOGRAPH — Institute of Solar Memory</title>
+<title>HELIOGRAPH · Institute of Solar Memory</title>
 <meta name="description" content="Since 1874, the Heliograph Institute has photographed the sun every clear day from Isla Sombra. An archive of one star, kept by hand.">
 <meta name="theme-color" content="#07070b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,14 +12,14 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='30' fill='%23ff8a1e'/><circle cx='50' cy='50' r='44' fill='none' stroke='%23ff8a1e' stroke-width='2' opacity='.5'/></svg>">
 <style>
 /* ═══════════════════════════════════════════════════════════════════
-   HELIOGRAPH — Institute of Solar Memory
+   HELIOGRAPH · Institute of Solar Memory
    Design & build: Claude Opus 5
    Every visual on this page is generated at runtime. No images.
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── 1. TOKENS ─────────────────────────────────────────────────── */
 :root{
-  /* OBSERVATION — night. the sun is the only light source. */
+  /* OBSERVATION: night. the sun is the only light source. */
   --void:#07070b;
   --void-2:#0c0d13;
   --ink:#f3ede2;
@@ -42,7 +42,7 @@
   --blend-cursor:difference;
   --canvas-op:1;
 
-  /* type scale — fluid, 1280→1920 */
+  /* type scale: fluid, 1280→1920 */
   --t-mono:clamp(9.5px,.62vw,11.5px);
   --t-micro:clamp(10px,.66vw,12px);
   --t-body:clamp(14px,.95vw,17px);
@@ -58,7 +58,7 @@
   --ease-io:cubic-bezier(.65,.05,.36,1);
 }
 html[data-mode="archive"]{
-  /* ARCHIVE — daylight. paper, iron-gall ink, silver-gelatin plates. */
+  /* ARCHIVE: daylight. paper, iron-gall ink, silver-gelatin plates. */
   --void:#e8e1d3;
   --void-2:#ded5c3;
   --ink:#17130d;
@@ -105,7 +105,7 @@ a{color:inherit;text-decoration:none}
 h1,h2,h3{font-weight:400;line-height:.94;letter-spacing:-.022em}
 :focus-visible{outline:1.5px solid var(--accent);outline-offset:4px;border-radius:2px}
 
-/* scrollbar — the page uses native scroll; keep the gutter, style it thin */
+/* scrollbar: the page uses native scroll; keep the gutter, style it thin */
 html.cur-ready body,html.cur-ready button,html.cur-ready a{cursor:none}
 html{scrollbar-width:thin;scrollbar-color:var(--rule) transparent}
 ::-webkit-scrollbar{width:9px}
@@ -164,7 +164,7 @@ section{position:relative;z-index:2}
 }
 html.no-gl #glfallback{display:block}
 
-/* paper texture overlay — archive mode only */
+/* paper texture overlay: archive mode only */
 #paper{
   position:fixed;inset:0;z-index:1;pointer-events:none;
   opacity:0;transition:opacity .9s var(--ease);
@@ -172,7 +172,7 @@ html.no-gl #glfallback{display:block}
 }
 html[data-mode="archive"] #paper{opacity:.55}
 
-/* global film grain — sits above everything but chrome */
+/* global film grain: sits above everything but chrome */
 #grain{
   position:fixed;inset:-50%;z-index:60;pointer-events:none;
   opacity:.055;mix-blend-mode:overlay;
@@ -520,7 +520,7 @@ html[data-mode="archive"] #lightbox .lb-frame{background:#ded5c3}
 </head>
 <body>
 
-<!-- ═══ SVG DEFS — filters & patterns used across the page ═══ -->
+<!-- ═══ SVG DEFS · filters & patterns used across the page ═══ -->
 <svg width="0" height="0" aria-hidden="true" style="position:absolute">
   <defs>
     <pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(38)">
@@ -643,11 +643,11 @@ html[data-mode="archive"] #lightbox .lb-frame{background:#ded5c3}
 <!-- ═══ 02 · MANIFESTO ══════════════════════════════════════════ -->
 <section id="manifesto" data-sec="manifesto">
   <div class="wrap grid">
-    <p class="mani" id="mani-text">We do not study the sun. We <em>remember</em> it — one plate each day, for a hundred and fifty years, so that some later eye might read what ours could only record.</p>
+    <p class="mani" id="mani-text">We do not study the sun. We <em>remember</em> it, one plate each day, for a hundred and fifty years, so that some later eye might read what ours could only record.</p>
     <div class="mani-note rv">
       <div class="mono faint" style="margin-bottom:10px">Keeper&rsquo;s note, 1949</div>
       <p>&ldquo;The instrument does not care whether anyone is watching. That is the whole of its virtue, and most of its cruelty.&rdquo;</p>
-      <div class="mono faint" style="margin-top:12px">— A. Verdú, seventh keeper</div>
+      <div class="mono faint" style="margin-top:12px">A. Verdú, seventh keeper</div>
     </div>
   </div>
 </section>
@@ -778,7 +778,7 @@ html[data-mode="archive"] #lightbox .lb-frame{background:#ded5c3}
 
           <!-- scale bar -->
           <g class="draw thin"><path d="M30 440 L170 440 M30 434 L30 446 M170 434 L170 446 M100 436 L100 444"/></g>
-          <text class="mono" x="30" y="462" fill="var(--ink-faint)" style="font-size:9px;letter-spacing:.14em">0—1 METRE</text>
+          <text class="mono" x="30" y="462" fill="var(--ink-faint)" style="font-size:9px;letter-spacing:.14em">0-1 METRE</text>
         </svg>
       </div>
 
@@ -787,7 +787,7 @@ html[data-mode="archive"] #lightbox .lb-frame{background:#ded5c3}
           <div class="idx mono" id="i-idx">Part 01 / 07</div>
           <div id="i-swap">
             <h3 id="i-title">Heliostat</h3>
-            <p id="i-desc">A flat mirror on a polar axis, turned by a falling weight and a governor. It holds the sun still — the one thing in this building permitted to move so that nothing else has to.</p>
+            <p id="i-desc">A flat mirror on a polar axis, turned by a falling weight and a governor. It holds the sun still: the one thing in this building permitted to move so that nothing else has to.</p>
           </div>
           <div class="i-list" id="i-list"></div>
         </div>
@@ -806,7 +806,7 @@ html[data-mode="archive"] #lightbox .lb-frame{background:#ded5c3}
     <div class="body">
       <div class="grid" style="margin-bottom:clamp(28px,3.4vw,56px)">
         <p class="lead rv" style="grid-column:1/span 5">Sunlight arrives complete and leaves with pieces missing. Every dark line is an element standing between the star&rsquo;s core and this island, taking its portion of the light.</p>
-        <p class="rv rv-d2 dim" style="grid-column:7/span 4;align-self:end">Drag across the band to inspect a line. With sound enabled, each absorption is voiced at a frequency scaled from its wavelength — the spectrum, heard.</p>
+        <p class="rv rv-d2 dim" style="grid-column:7/span 4;align-self:end">Drag across the band to inspect a line. With sound enabled, each absorption is voiced at a frequency scaled from its wavelength: the spectrum, heard.</p>
       </div>
       <div class="spec-shell rv rv-d2">
         <div class="spec-head mono">
@@ -859,7 +859,7 @@ html[data-mode="archive"] #lightbox .lb-frame{background:#ded5c3}
     </div>
     <div class="body">
       <div class="grid" style="margin-bottom:clamp(24px,3vw,48px)">
-        <p class="lead rv" style="grid-column:1/span 5">Two hundred and seventy-six years of counting spots, and the star keeps almost the same time — eleven years, give or take, forever.</p>
+        <p class="lead rv" style="grid-column:1/span 5">Two hundred and seventy-six years of counting spots, and the star keeps almost the same time: eleven years, give or take, forever.</p>
         <p class="rv rv-d2 dim" style="grid-column:7/span 4;align-self:end">The Institute&rsquo;s own plates begin at the vertical rule. Everything to its left we inherited from other people&rsquo;s patience.</p>
       </div>
       <div class="cyc-shell rv rv-d2">
@@ -884,7 +884,7 @@ html[data-mode="archive"] #lightbox .lb-frame{background:#ded5c3}
     </div>
     <div class="body">
       <div class="grid" style="margin-bottom:clamp(28px,3.4vw,56px)">
-        <p class="lead rv" style="grid-column:1/span 5">Each plate is a single morning. Silver, gelatin, glass — and one star that never sat still for any of them.</p>
+        <p class="lead rv" style="grid-column:1/span 5">Each plate is a single morning. Silver, gelatin, glass, and one star that never sat still for any of them.</p>
       </div>
       <div class="plate-grid" id="plate-grid"></div>
     </div>
@@ -928,7 +928,7 @@ html[data-mode="archive"] #lightbox .lb-frame{background:#ded5c3}
   <div class="wrap grid">
     <div class="col-a">
       <h4 class="mono">Colophon</h4>
-      <p>Every mark on this page is generated at runtime — the star is a raymarched volume, the spectrum is computed from wavelength, the plates are drawn in code. There is not one photograph in this document.</p>
+      <p>Every mark on this page is generated at runtime: the star is a raymarched volume, the spectrum is computed from wavelength, the plates are drawn in code. There is not one photograph in this document.</p>
       <p class="sig" style="margin-top:22px">Designed &amp; built by Claude&nbsp;Opus&nbsp;5</p>
     </div>
     <div class="col-b">
@@ -1437,7 +1437,7 @@ void main(){
   vec2 q=uv-0.5;
   float r2=dot(q,q);
 
-  // chromatic aberration — grows toward the edges and with scroll energy
+  // chromatic aberration: grows toward the edges and with scroll energy
   float ab=(0.0016+uEnergy*0.0075)*(0.35+r2*3.2)*(1.0-uMode*0.55);
   vec3 sc;
   sc.r=texture(uScene,uv-q*ab).r;
@@ -1484,7 +1484,7 @@ void main(){
   float g=h21(gl_FragCoord.xy+fract(uTime)*137.0)-0.5;
   col+=g*mix(0.030,0.055,uMode);
 
-  // intro reveal — an aperture opening
+  // intro reveal: an aperture opening
   float ap=smoothstep(0.0,1.0,uIntro);
   col*=ap;
   col=mix(col,col*1.0,1.0);
@@ -1667,7 +1667,7 @@ function sampleScore(centreY){
           bloom:lerp(A.bloom,B.bloom,t), ecl:lerp(A.ecl,B.ecl,t)};
 }
 
-/* ── C. THE SIGNATURE — solar spectrum, computed from wavelength ── */
+/* ── C. THE SIGNATURE: solar spectrum, computed from wavelength ── */
 const LINES=[
   {nm:393.37,el:"Calcium II",fr:"K", d:0.95,w:1.5},
   {nm:396.85,el:"Calcium II",fr:"H", d:0.92,w:1.4},
@@ -1831,7 +1831,7 @@ function specAt(clientX){
   const near = bd<4.5;
   $("#s-wl").textContent=(near?best.nm:nm).toFixed(2);
   $("#s-el").textContent=near?best.el:"Continuum";
-  $("#s-fr").textContent=near?best.fr:"—";
+  $("#s-fr").textContent=near?best.fr:"-";
   $("#s-dp").textContent=(near?best.d:absorption(nm)).toFixed(2);
   if(near&&SPEC.lastLine!==best.fr){ SPEC.lastLine=best.fr; Sound.line(best.nm,best.d); }
   if(!near)SPEC.lastLine=null;
@@ -1841,7 +1841,7 @@ specCv.addEventListener("pointermove",e=>specAt(e.clientX));
 specCv.addEventListener("pointerdown",e=>{specCv.setPointerCapture(e.pointerId);specAt(e.clientX);});
 specCv.addEventListener("pointerleave",()=>{SPEC.hover=-1;SPEC.lastLine=null;drawSpectrum();});
 
-/* ── D. THE FIELD — curl-noise + dipole magnetic flow ────────────── */
+/* ── D. THE FIELD: curl-noise + dipole magnetic flow ────────────── */
 const fCv=$("#field-canvas"), fctx=fCv.getContext("2d",{alpha:true});
 const FIELD={w:0,h:0,parts:[],on:false,poles:[],mx:-9999,my:-9999,dpr:1,cx:0,cy:0,R:0};
 const fnoise=makeNoise(20250418);
@@ -1854,7 +1854,7 @@ function fieldResize(){
   FIELD.cx=r.width*0.5; FIELD.cy=r.height*1.50; FIELD.R=Math.max(r.width,r.height)*0.70;
   // Magnetic poles seated just under the limb. Charges alternate and sum to
   // zero, so the lines close back onto the surface as arcades instead of
-  // escaping — a net charge would read as wind, not field.
+  // escaping: a net charge would read as wind, not field.
   FIELD.poles=[];
   const base=-Math.PI/2;
   const seat=(a,rad,q)=>FIELD.poles.push({
@@ -1935,7 +1935,7 @@ $("#field").addEventListener("pointermove",e=>{
 },{passive:true});
 $("#field").addEventListener("pointerleave",()=>{FIELD.mx=-9999;FIELD.my=-9999;});
 
-/* ── E. THE CYCLE — 276 years of sunspot number ──────────────────── */
+/* ── E. THE CYCLE: 276 years of sunspot number ──────────────────── */
 const CYC={data:[],prog:0,hover:-1,w:0,h:0,pad:{l:52,r:18,t:26,b:34}};
 (function buildCycle(){
   const rnd=mulberry(18740403);
@@ -2066,14 +2066,14 @@ cyCv.addEventListener("pointermove",e=>{
 });
 cyCv.addEventListener("pointerleave",()=>{CYC.hover=-1;drawCycle();});
 
-/* ── F. THE ARCHIVE — six plates, drawn pixel by pixel ───────────── */
+/* ── F. THE ARCHIVE: six plates, drawn pixel by pixel ───────────── */
 const PLATES=[
   {id:"quiet",  type:"white",  title:"Quiet Disc",        band:"White light 550 nm", date:"14 · VI · 1889",
    no:"04 271", keeper:"M. Oyarzun", exp:"1/80 s", see:"1.8″", seed:1889,
    desc:"A morning of almost nothing. Two small groups near the equator, a disc otherwise clean enough that the keeper noted only the weather."},
   {id:"halpha", type:"halpha", title:"Chromosphere",      band:"Hα 656.3 nm",        date:"02 · IX · 1937",
    no:"18 902", keeper:"R. Calvo",   exp:"1/12 s", see:"2.4″", seed:1937,
-   desc:"Hydrogen alone. The filaments are cooler gas suspended above the surface — dark only because they are seen against something brighter."},
+   desc:"Hydrogen alone. The filaments are cooler gas suspended above the surface, dark only because they are seen against something brighter."},
   {id:"cak",    type:"cak",    title:"Calcium Network",   band:"Ca II K 393.4 nm",   date:"27 · III · 1958",
    no:"27 664", keeper:"A. Verdú",   exp:"1/6 s",  see:"1.5″", seed:1958,
    desc:"The magnetic skeleton, made visible. Each bright cell wall is a boundary where the field has been swept aside and piled up."},
@@ -2084,7 +2084,7 @@ const PLATES=[
    no:"44 507", keeper:"L. Amat",    exp:"9 s",    see:"1.9″", seed:1994,
    desc:"The disc blocked by a metal cone so the thin light around it can be seen at all. Streamers this long usually mean the field is about to reverse."},
   {id:"total",  type:"eclipse",title:"Totality, 1905",    band:"Naked eye · 3ᵐ 46ˢ", date:"30 · VIII · 1905",
-   no:"09 003", keeper:"H. Lindqvist",exp:"4 s",   see:"—",    seed:1905,
+   no:"09 003", keeper:"H. Lindqvist",exp:"4 s",   see:"-",    seed:1905,
    desc:"The Institute's only plate made away from the island. Four seconds of exposure, carried back from Burgos in a wooden box, still the finest corona we hold."}
 ];
 const PTONE={
@@ -2348,12 +2348,12 @@ addEventListener("keydown",e=>{
 
 /* ── the instrument, annotated ───────────────────────────────────── */
 const PARTS=[
-  ["Heliostat","A flat mirror on a polar axis, turned by a falling weight and a governor. It holds the sun still — the one thing in this building permitted to move, so that nothing else has to."],
+  ["Heliostat","A flat mirror on a polar axis, turned by a falling weight and a governor. It holds the sun still: the one thing in this building permitted to move, so that nothing else has to."],
   ["Objective","254 mm of crown and flint, figured in Dublin in 1908 and never re-polished. It throws a solar image 23 mm across onto the first slit."],
   ["Entrance slit","Twenty microns wide. Everything the Institute knows about the sun has passed through a gap you could not see edge-on."],
   ["Collimator","Returns the diverging cone to parallel light, so that the prisms receive the beam the way the sky sent it."],
   ["Prism train","Two dense flint prisms in minimum deviation. Here the light stops being white and admits what it is made of."],
-  ["Camera lens","Focuses one narrow colour — and only that colour — onto the plate. Change the angle and you change which element you are photographing."],
+  ["Camera lens","Focuses one narrow colour, and only that colour, onto the plate. Change the angle and you change which element you are photographing."],
   ["Plate cassette","Glass, gelatin, silver bromide. The slit and the plate travel together across the image; the sun is scanned, never simply snapped."]
 ];
 const iTitle=$("#i-title"), iDesc=$("#i-desc"), iIdx=$("#i-idx"), iSwap=$("#i-swap"), iList=$("#i-list");
@@ -2591,7 +2591,7 @@ function boot(){
     setTimeout(()=>{LOAD.fonts=1;},3000);
   } else LOAD.fonts=1;
 
-  // plates — one per frame so the preloader keeps breathing
+  // plates: one per frame so the preloader keeps breathing
   let pi=0;
   (function next(){
     if(pi>=plateCanvases.length){ LOAD.plates=1; return; }
