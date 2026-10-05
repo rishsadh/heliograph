@@ -33,7 +33,7 @@ There is a **Sound** toggle, off by default. When on, the audio is synthesised w
 
 If the browser reports `prefers-reduced-motion: reduce`, CSS transitions and animations are cut to near zero and the scroll reveals show immediately. The script skips the View Transitions and the smooth scroll. It also drops the wordmark weight ripple, the instrument draw-on and the cursor drift.
 
-The render loop stops too. Once the loading screen is done, the page does not run a continuous animation frame loop. The star is drawn as a still with a frozen moment of its animation, and it is redrawn once when the scroll pose, the mode or the window size changes. The field is drawn as one settled still of its streamlines. The UTC clock in the bottom bar keeps ticking on a one second timer.
+The render loop stops too. Once the loading screen is done, the page does not run a continuous animation frame loop. The star is drawn as a still with a frozen moment of its animation, and it is redrawn once when the scroll pose, the mode or the window size changes. The field is drawn as one settled still of its particle trails. The UTC clock in the bottom bar keeps ticking on a one second timer.
 
 The file is 2,690 lines and about 131 KB.
 
