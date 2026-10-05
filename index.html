@@ -516,6 +516,21 @@ html[data-mode="archive"] #lightbox .lb-frame{background:#ded5c3}
 ::view-transition-group(plate-morph){animation-duration:.62s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
 ::view-transition-old(plate-morph),::view-transition-new(plate-morph){
   animation-duration:.62s;height:100%;object-fit:cover;mix-blend-mode:normal}
+
+/* ── 18. PHONE: keep the fixed bars and section heads inside the viewport ── */
+@media (max-width:640px){
+  .bar{gap:10px;min-width:0}
+  #bar-top>.faint{display:none}
+  .mark{gap:8px}
+  .mark .name{letter-spacing:.2em}
+  .tog{gap:7px;padding:7px 10px}
+  .tog .txt{letter-spacing:.1em}
+  .snd .txt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .readout{min-width:0}
+  #r-clock{white-space:nowrap}
+  .sechead{flex-wrap:wrap}
+  .sechead .meta{flex:1 1 100%;text-align:left}
+}
 </style>
 </head>
 <body>
@@ -1050,6 +1065,7 @@ function applyMode(next){
   modeTxt.textContent = next ? "Archive":"Observation";
   modeBtn.setAttribute("aria-pressed", next?"true":"false");
   MODE.target = next?1:0;
+  FIELD.still=false;
   document.querySelector('meta[name=theme-color]').setAttribute("content", next?"#e8e1d3":"#07070b");
   drawCycle(); drawSpectrum(); schedulePlates();
   Sound.tick(next?880:440);
@@ -1206,6 +1222,7 @@ function layout(){
   wmBoxes = wmChars.map(c=>{const r=c.getBoundingClientRect();
     return {el:c,cx:r.left+r.width/2,cy:r.top+r.height/2};});
   if(typeof buildScore==="function") buildScore();
+  if(RM) kick();
 }
 function tickWordmark(){
   if(!wmBoxes.length||RM||!M.seen)return;
@@ -1569,12 +1586,12 @@ const Star={ok:false};
   function render(now){
     resize();
     const dt=Math.min(now-lastT,50); lastT=now; acc+=dt; frames++;
-    if(frames>=90){
+    if(!RM&&frames>=90){
       const avg=acc/frames; acc=0; frames=0;
       if(avg>25&&quality>0.6){quality=Math.max(0.6,quality-0.16);W=0;U.steps=34;}
       else if(avg<13&&quality<1){quality=Math.min(1,quality+0.10);W=0;}
     }
-    const t=now*0.001;
+    const t=RM?14:now*0.001;           // reduced motion: a frozen moment of the star
 
     // ── scene
     bindRT(RTs.scene);
@@ -1847,6 +1864,7 @@ const FIELD={w:0,h:0,parts:[],on:false,poles:[],mx:-9999,my:-9999,dpr:1,cx:0,cy:
 const fnoise=makeNoise(20250418);
 function fieldResize(){
   const r=fCv.getBoundingClientRect(); if(!r.width||!r.height)return;
+  FIELD.still=false;
   const dpr=FIELD.dpr=Math.min(devicePixelRatio||1,1.5);
   FIELD.w=Math.round(r.width); FIELD.h=Math.round(r.height);
   fCv.width=Math.round(r.width*dpr); fCv.height=Math.round(r.height*dpr);
@@ -1900,6 +1918,16 @@ function fieldStep(){
   if(!FIELD.on)return;
   if(!FIELD.w||FIELD.h!==Math.round(fr.height)) fieldResize();
   if(!FIELD.w)return;
+  if(RM){
+    // reduced motion: draw one settled still of the field, then leave it alone
+    if(FIELD.still)return;
+    FIELD.still=true; fctx.clearRect(0,0,FIELD.w,FIELD.h);
+    for(let i=0;i<160;i++) fieldAdvance();
+    return;
+  }
+  fieldAdvance();
+}
+function fieldAdvance(){
   const arc=MODE.target>0.5;
   // fade toward TRANSPARENT, never toward an opaque plate
   fctx.globalCompositeOperation="destination-out";
@@ -2488,8 +2516,12 @@ function drawPre(p){
 const progEl=$("#prog"), grainEl=$("#grain");
 let prevSY=0, gframe=0;
 let lastNow=performance.now();
+/* Reduced motion: the loop is not continuous. It runs while the loading screen
+   is up, then stops, and kick() restarts it for one frame per input event. */
+let rafOn=true;
+function kick(){ if(!rafOn){ rafOn=true; lastNow=performance.now(); requestAnimationFrame(frame); } }
 function frame(now){
-  requestAnimationFrame(frame);
+  if(!RM) requestAnimationFrame(frame);
   const dtn=clamp((now-lastNow)/16.667,0.2,4); lastNow=now;
 
   /* scroll spring */
@@ -2497,6 +2529,7 @@ function frame(now){
   const dv=S.sy-prevSY; prevSY=S.sy;
   S.vel=dv;
   S.energy+= (Math.min(Math.abs(dv)/58,1)-S.energy)*(1-Math.pow(0.91,dtn));
+  if(RM) S.energy=0;
   S.p=clamp(S.y/S.max,0,1);
   S.sp=clamp(S.sy/S.max,0,1);
   progEl.style.transform=`scaleX(${S.sp})`;
@@ -2504,6 +2537,7 @@ function frame(now){
 
   /* mode crossfade */
   MODE.v+=(MODE.target-MODE.v)*(1-Math.pow(0.945,dtn));
+  if(RM) MODE.v=MODE.target;
 
   /* cursor */
   let tx=M.tx, ty=M.ty;
@@ -2518,7 +2552,7 @@ function frame(now){
   } else {
     $$(".tog").forEach(t=>{ if(t.__moved){t.style.transform="";t.__moved=0;} });
   }
-  const ck=1-Math.pow(0.78,dtn);
+  const ck=RM?1:1-Math.pow(0.78,dtn);
   M.x+=(tx-M.x)*ck; M.y+=(ty-M.y)*ck;
   cur.style.transform=`translate3d(${M.x.toFixed(1)}px,${M.y.toFixed(1)}px,0)`;
 
@@ -2532,7 +2566,12 @@ function frame(now){
     U.sunR=k.r; U.bloom=k.bloom; U.eclipse=k.ecl;
     U.energy=S.energy;
     U.intro=LOAD.v>=1?1:Math.pow(clamp(LOAD.v*1.25,0,1),1.6);
-    Star.render(now);
+    if(RM){
+      // one render per pose, mode or size change, not one per animation frame
+      const sig=[U.sunX,U.sunY,U.sunR,U.bloom,U.eclipse,MODE.v,U.intro,innerWidth,innerHeight]
+        .map(v=>typeof v==="number"?v.toFixed(4):v).join("|");
+      if(sig!==Star.sig){ Star.sig=sig; Star.render(now); }
+    } else Star.render(now);
   }
 
   /* page pieces */
@@ -2540,7 +2579,7 @@ function frame(now){
   fieldStep();
 
   /* grain drift */
-  if(++gframe%2===0){
+  if(!RM && ++gframe%2===0){
     grainEl.style.transform=
       `translate(${(Math.random()*14-7).toFixed(0)}px,${(Math.random()*14-7).toFixed(0)}px)`;
   }
@@ -2556,6 +2595,12 @@ function frame(now){
     preStat.textContent=STAT[Math.min(STAT.length-1,Math.floor(LOAD.v*STAT.length))];
     drawPre(LOAD.v);
     if(LOAD.v>0.985){ LOAD.done=true; finish(); }
+  }
+
+  if(RM){
+    // keep going only while the loading screen is up or something is still settling
+    if(!LOAD.done || Math.abs(S.y-S.sy)>0.5) requestAnimationFrame(frame);
+    else rafOn=false;
   }
 }
 
@@ -2612,6 +2657,17 @@ function boot(){
   ro.observe(document.body);
 
   requestAnimationFrame(frame);
+}
+if(RM){
+  // each of these can change what is on screen, so each gets one frame
+  ["scroll","resize","pointermove","pointerdown","pointerup","keydown","click"]
+    .forEach(ev=>addEventListener(ev,kick,{passive:true}));
+  // the loop is idle now, so keep the UTC clock honest on its own
+  setInterval(()=>{
+    const d=new Date();
+    rClock.textContent=[d.getUTCHours(),d.getUTCMinutes(),d.getUTCSeconds()]
+      .map(n=>String(n).padStart(2,"0")).join(":")+" UTC";
+  },1000);
 }
 if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",boot);
 else boot();
