@@ -1,0 +1,2634 @@
+<!doctype html>
+<html lang="en" data-mode="observation">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>HELIOGRAPH — Institute of Solar Memory</title>
+<meta name="description" content="Since 1874, the Heliograph Institute has photographed the sun every clear day from Isla Sombra. An archive of one star, kept by hand.">
+<meta name="theme-color" content="#07070b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..900,0..100,0..1&family=Inter:opsz,wght@14..32,200..800&family=JetBrains+Mono:wght@200..700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='30' fill='%23ff8a1e'/><circle cx='50' cy='50' r='44' fill='none' stroke='%23ff8a1e' stroke-width='2' opacity='.5'/></svg>">
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   HELIOGRAPH — Institute of Solar Memory
+   Design & build: Claude Opus 5
+   Every visual on this page is generated at runtime. No images.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. TOKENS ─────────────────────────────────────────────────── */
+:root{
+  /* OBSERVATION — night. the sun is the only light source. */
+  --void:#07070b;
+  --void-2:#0c0d13;
+  --ink:#f3ede2;
+  --ink-dim:#a8a49c;
+  --ink-faint:#6a6862;
+  --rule:rgba(243,237,226,.14);
+  --rule-soft:rgba(243,237,226,.07);
+  --amber:#ff9a2e;
+  --ember:#ff5f1f;
+  --flare:#ffd98a;
+  --halpha:#e0452f;
+  --cak:#7fb2d9;
+  --paper-grain:0;
+  --plate-bg:rgba(243,237,226,.035);
+  --plate-edge:rgba(243,237,226,.10);
+  --accent:var(--amber);
+  --accent-2:var(--cak);
+  --sel-bg:var(--amber); --sel-fg:#07070b;
+  --shadow-lift:0 24px 60px -20px rgba(0,0,0,.9);
+  --blend-cursor:difference;
+  --canvas-op:1;
+
+  /* type scale — fluid, 1280→1920 */
+  --t-mono:clamp(9.5px,.62vw,11.5px);
+  --t-micro:clamp(10px,.66vw,12px);
+  --t-body:clamp(14px,.95vw,17px);
+  --t-lead:clamp(18px,1.35vw,25px);
+  --t-h3:clamp(22px,1.9vw,34px);
+  --t-h2:clamp(34px,4.1vw,74px);
+  --t-h1:clamp(56px,9.6vw,176px);
+  --t-mega:clamp(62px,11.6vw,210px);
+
+  --gut:clamp(20px,3.2vw,60px);
+  --stack:clamp(76px,8vw,148px);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --ease-io:cubic-bezier(.65,.05,.36,1);
+}
+html[data-mode="archive"]{
+  /* ARCHIVE — daylight. paper, iron-gall ink, silver-gelatin plates. */
+  --void:#e8e1d3;
+  --void-2:#ded5c3;
+  --ink:#17130d;
+  --ink-dim:#5b5245;
+  --ink-faint:#7e7565;
+  --rule:rgba(23,19,13,.22);
+  --rule-soft:rgba(23,19,13,.11);
+  --amber:#8c3a1e;
+  --ember:#a8431d;
+  --flare:#5c4a2a;
+  --halpha:#8c3a1e;
+  --cak:#2e4a5c;
+  --paper-grain:1;
+  --plate-bg:rgba(23,19,13,.045);
+  --plate-edge:rgba(23,19,13,.16);
+  --accent:var(--amber);
+  --accent-2:var(--cak);
+  --sel-bg:#17130d; --sel-fg:#e8e1d3;
+  --shadow-lift:0 20px 44px -22px rgba(60,44,20,.5);
+  --blend-cursor:multiply;
+  --canvas-op:1;
+}
+
+/* ── 2. RESET & BASE ───────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+html,body{overscroll-behavior:none}
+body{
+  background:var(--void);
+  color:var(--ink);
+  font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:var(--t-body);
+  font-optical-sizing:auto;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  font-synthesis-weight:none;
+  transition:background-color .9s var(--ease),color .9s var(--ease);
+}
+::selection{background:var(--sel-bg);color:var(--sel-fg)}
+img,svg,canvas{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-weight:400;line-height:.94;letter-spacing:-.022em}
+:focus-visible{outline:1.5px solid var(--accent);outline-offset:4px;border-radius:2px}
+
+/* scrollbar — the page uses native scroll; keep the gutter, style it thin */
+html.cur-ready body,html.cur-ready button,html.cur-ready a{cursor:none}
+html{scrollbar-width:thin;scrollbar-color:var(--rule) transparent}
+::-webkit-scrollbar{width:9px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--rule);border-radius:9px}
+
+/* ── 3. TYPE PRIMITIVES ────────────────────────────────────────── */
+.disp{
+  font-family:"Fraunces","Fraunces Fallback",Georgia,"Times New Roman",serif;
+  font-variation-settings:"opsz" 144,"wght" 300,"SOFT" 22,"WONK" 1;
+  font-weight:300;
+}
+.mono{
+  font-family:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  font-size:var(--t-mono);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  font-weight:400;
+  font-variant-numeric:tabular-nums;
+}
+.dim{color:var(--ink-dim)}
+.faint{color:var(--ink-faint)}
+.lead{font-size:var(--t-lead);line-height:1.5;letter-spacing:-.011em;font-weight:300;max-width:34ch}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* ── 4. LAYOUT ─────────────────────────────────────────────────── */
+.wrap{width:100%;max-width:1680px;margin-inline:auto;padding-inline:var(--gut)}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gut)}
+section{position:relative;z-index:2}
+.sec{padding-block:var(--stack)}
+.rule{height:1px;background:var(--rule);width:100%;transform-origin:left;
+      transition:background-color .9s var(--ease)}
+
+/* section header: § number + title + hairline */
+.sechead{display:flex;align-items:baseline;gap:clamp(14px,1.8vw,30px);
+         padding-bottom:14px;border-bottom:1px solid var(--rule);margin-bottom:clamp(34px,4.6vw,80px)}
+.sechead .num{color:var(--accent);flex:none}
+.sechead .ttl{flex:1}
+.sechead .meta{color:var(--ink-faint);flex:none;text-align:right}
+
+/* ── 5. WEBGL STAGE ────────────────────────────────────────────── */
+#stage{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  opacity:var(--canvas-op);
+  transition:opacity .9s var(--ease);
+  contain:strict;
+}
+#stage canvas{width:100%;height:100%;display:block}
+/* fallback if webgl2 is unavailable */
+#glfallback{
+  position:fixed;inset:0;z-index:0;pointer-events:none;display:none;
+  background:
+    radial-gradient(circle at 68% 42%,#fff6dd 0%,#ffc247 6%,#ff7a18 12%,#b5300a 20%,rgba(60,12,2,.5) 34%,transparent 60%),
+    radial-gradient(circle at 68% 42%,rgba(255,150,40,.16) 0%,transparent 55%);
+  filter:blur(.3px);
+}
+html.no-gl #glfallback{display:block}
+
+/* paper texture overlay — archive mode only */
+#paper{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  opacity:0;transition:opacity .9s var(--ease);
+  mix-blend-mode:multiply;
+}
+html[data-mode="archive"] #paper{opacity:.55}
+
+/* global film grain — sits above everything but chrome */
+#grain{
+  position:fixed;inset:-50%;z-index:60;pointer-events:none;
+  opacity:.055;mix-blend-mode:overlay;
+  background-repeat:repeat;
+  will-change:transform;
+}
+html[data-mode="archive"] #grain{opacity:.10;mix-blend-mode:multiply}
+
+/* ── 6. CURSOR ─────────────────────────────────────────────────── */
+#cur{position:fixed;top:0;left:0;z-index:200;pointer-events:none;
+     mix-blend-mode:var(--blend-cursor);will-change:transform}
+#cur .ring{
+  position:absolute;left:0;top:0;width:38px;height:38px;margin:-19px 0 0 -19px;
+  border:1px solid var(--ink);border-radius:50%;
+  transition:width .38s var(--ease),height .38s var(--ease),margin .38s var(--ease),
+             opacity .3s,border-color .5s,background-color .38s var(--ease);
+}
+#cur .dot{
+  position:absolute;left:0;top:0;width:4px;height:4px;margin:-2px 0 0 -2px;
+  background:var(--ink);border-radius:50%;transition:opacity .3s,transform .38s var(--ease);
+}
+#cur .lbl{
+  position:absolute;left:0;top:0;transform:translate(-50%,-50%);
+  font-family:"JetBrains Mono",monospace;font-size:8.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink);white-space:nowrap;
+  opacity:0;transition:opacity .28s;
+}
+#cur.hot .ring{width:74px;height:74px;margin:-37px 0 0 -37px;border-color:var(--accent)}
+#cur.hot .dot{opacity:0}
+#cur.hot .lbl{opacity:1}
+#cur.press .ring{width:26px;height:26px;margin:-13px 0 0 -13px}
+#cur.hide{opacity:0}
+@media (hover:none),(pointer:coarse){#cur{display:none}html.cur-ready body,html.cur-ready button,html.cur-ready a{cursor:auto}}
+
+/* ── 7. CHROME ─────────────────────────────────────────────────── */
+#chrome{position:fixed;inset:0;z-index:50;pointer-events:none}
+#chrome>*{pointer-events:auto}
+
+.bar{
+  position:fixed;left:0;right:0;display:flex;align-items:center;
+  padding-inline:var(--gut);gap:var(--gut);pointer-events:none;
+}
+.bar>*{pointer-events:auto}
+.bar::before{content:"";position:absolute;left:0;right:0;z-index:-1;pointer-events:none}
+#bar-top::before{top:0;height:190%;
+  background:linear-gradient(to bottom,var(--void) 0%,var(--void) 46%,transparent 100%)}
+#bar-bot::before{bottom:0;height:165%;
+  background:linear-gradient(to top,var(--void) 0%,var(--void) 44%,transparent 100%)}
+#bar-top{top:0;height:clamp(56px,5.2vw,78px)}
+#bar-bot{bottom:0;height:clamp(48px,4.4vw,64px)}
+.bar::after{content:"";position:absolute;left:var(--gut);right:var(--gut);height:1px;background:var(--rule)}
+#bar-top::after{bottom:0}
+#bar-bot::after{top:0}
+
+.mark{display:flex;align-items:baseline;gap:10px;flex:none}
+.mark .glyph{width:13px;height:13px;position:relative;align-self:center}
+.mark .glyph::before{content:"";position:absolute;inset:2.5px;border-radius:50%;background:var(--accent)}
+.mark .glyph::after{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid var(--accent);opacity:.45;
+  animation:pulse 4.5s var(--ease) infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.45}50%{transform:scale(1.32);opacity:.08}}
+.mark .name{font-family:"JetBrains Mono",monospace;font-size:var(--t-micro);letter-spacing:.3em;font-weight:500}
+.spacer{flex:1}
+
+.tog{
+  display:inline-flex;align-items:center;gap:9px;padding:7px 12px;
+  border:1px solid var(--rule);border-radius:999px;
+  transition:border-color .4s,background-color .4s,color .4s;
+  position:relative;overflow:hidden;
+}
+.tog:hover{border-color:var(--accent)}
+.tog .swatch{width:9px;height:9px;border-radius:50%;border:1px solid var(--ink-dim);
+  background:linear-gradient(90deg,var(--ink) 50%,transparent 50%);transition:transform .55s var(--ease)}
+html[data-mode="archive"] .tog .swatch{transform:rotate(180deg)}
+.tog .txt{font-family:"JetBrains Mono",monospace;font-size:var(--t-mono);letter-spacing:.18em;text-transform:uppercase}
+.tog[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
+
+/* sound bars */
+.snd .eq{display:flex;align-items:flex-end;gap:1.5px;height:10px;width:13px}
+.snd .eq i{flex:1;background:currentColor;height:20%;transform-origin:bottom;transition:height .3s}
+.snd[aria-pressed="true"] .eq i{animation:eq 1.1s ease-in-out infinite}
+.snd[aria-pressed="true"] .eq i:nth-child(2){animation-delay:.18s}
+.snd[aria-pressed="true"] .eq i:nth-child(3){animation-delay:.36s}
+@keyframes eq{0%,100%{height:22%}50%{height:100%}}
+
+/* section index rail */
+#rail{position:fixed;right:var(--gut);top:50%;transform:translateY(-50%);z-index:50;
+      display:flex;flex-direction:column;gap:11px;align-items:flex-end}
+#rail a{display:flex;align-items:center;gap:9px;opacity:.42;transition:opacity .4s var(--ease)}
+#rail a .rlbl{font-family:"JetBrains Mono",monospace;font-size:8.5px;letter-spacing:.18em;
+  text-shadow:0 0 10px var(--void),0 0 4px var(--void);
+  text-transform:uppercase;opacity:0;transform:translateX(6px);
+  transition:opacity .4s var(--ease),transform .4s var(--ease);white-space:nowrap}
+#rail a .rtick{width:16px;height:1px;background:var(--ink);transition:width .4s var(--ease),background-color .4s}
+#rail a:hover,#rail a.on{opacity:1}
+#rail a:hover .rlbl,#rail a.on .rlbl{opacity:1;transform:none}
+#rail a.on .rtick{width:30px;background:var(--accent)}
+#rail.away{opacity:0;pointer-events:none;transform:translateY(-50%) translateX(14px)}
+#rail{transition:opacity .6s var(--ease),transform .6s var(--ease)}
+@media (max-width:1180px){#rail{display:none}}
+
+/* scroll progress hairline */
+#prog{position:fixed;left:0;top:0;height:2px;width:100%;transform:scaleX(0);transform-origin:left;
+      background:linear-gradient(90deg,var(--ember),var(--amber),var(--flare));z-index:70;will-change:transform}
+
+/* live readout in bottom bar */
+.readout{display:flex;gap:clamp(14px,2.4vw,40px);align-items:center;color:var(--ink-faint);flex-wrap:nowrap;overflow:hidden}
+.readout span b{color:var(--ink-dim);font-weight:400}
+@media (max-width:1000px){.readout .opt{display:none}}
+
+/* ── 8. PRELOADER ──────────────────────────────────────────────── */
+#pre{
+  position:fixed;inset:0;z-index:150;background:var(--void);
+  display:grid;place-items:center;
+  clip-path:circle(150% at 50% 50%);
+  transition:clip-path 1.5s var(--ease-io);
+}
+#pre.out{clip-path:circle(0% at 50% 46%);pointer-events:none}
+#pre .inner{width:min(560px,74vw);text-align:center}
+#pre .preword{
+  font-family:"Fraunces",Georgia,serif;font-variation-settings:"opsz" 144,"wght" 200,"SOFT" 40,"WONK" 1;
+  font-size:clamp(38px,6.4vw,86px);line-height:1;letter-spacing:-.03em;
+  display:flex;justify-content:center;flex-wrap:nowrap;
+}
+#pre .preword span{display:inline-block;transform:translateY(105%) rotate(6deg);opacity:0;will-change:transform}
+#pre .sub{margin-top:16px;color:var(--ink-faint);opacity:0;transition:opacity .8s .5s}
+#pre.go .sub{opacity:1}
+/* the calibration spectrum */
+#precanvas{width:100%;height:34px;margin-top:34px;opacity:0;transition:opacity .7s .4s}
+#pre.go #precanvas{opacity:1}
+#pre .foot{display:flex;justify-content:space-between;margin-top:12px;color:var(--ink-faint);opacity:0;transition:opacity .7s .6s}
+#pre.go .foot{opacity:1}
+#pre .stat{min-height:1.4em;text-align:left}
+
+/* ── 9. HERO ───────────────────────────────────────────────────── */
+#hero{min-height:100svh;display:flex;align-items:center;padding-top:clamp(56px,5.2vw,78px)}
+#hero .wrap{width:100%}
+.h-kicker{display:flex;align-items:center;gap:14px;color:var(--ink-faint);margin-bottom:clamp(18px,2.2vw,34px)}
+.h-kicker .ln{height:1px;width:clamp(30px,5vw,90px);background:var(--rule)}
+#wordmark{
+  font-family:"Fraunces",Georgia,serif;font-size:var(--t-mega);line-height:.82;
+  letter-spacing:-.045em;display:flex;flex-wrap:wrap;margin-left:-.055em;
+}
+#wordmark span{
+  display:inline-block;
+  font-variation-settings:"opsz" 144,"wght" 300,"SOFT" 20,"WONK" 1;
+  will-change:font-variation-settings,transform;
+}
+.h-sub{display:flex;align-items:baseline;gap:clamp(14px,2vw,30px);margin-top:clamp(14px,1.8vw,26px);flex-wrap:wrap}
+.h-sub .big{font-family:"Fraunces",Georgia,serif;font-variation-settings:"opsz" 44,"wght" 300,"SOFT" 40,"WONK" 0;
+  font-size:var(--t-h3);letter-spacing:-.02em;font-style:italic}
+.h-cols{margin-top:clamp(46px,6vw,110px);align-items:end}
+.h-cols .c-a{grid-column:1/span 4}
+.h-cols .c-b{grid-column:6/span 3}
+.h-cols .c-c{grid-column:10/span 3;text-align:right}
+@media(max-width:900px){.h-cols .c-a{grid-column:1/span 12}.h-cols .c-b{grid-column:1/span 6}.h-cols .c-c{grid-column:7/span 6}}
+.scrollcue{display:inline-flex;align-items:center;gap:10px;color:var(--ink-faint)}
+.scrollcue .track{width:1px;height:38px;background:var(--rule);position:relative;overflow:hidden}
+.scrollcue .track::after{content:"";position:absolute;left:0;width:1px;height:14px;background:var(--accent);
+  animation:cue 2.4s var(--ease-io) infinite}
+@keyframes cue{0%{transform:translateY(-16px)}70%,100%{transform:translateY(40px)}}
+
+/* ── 10. MANIFESTO ─────────────────────────────────────────────── */
+#manifesto{padding-block:clamp(104px,12vw,200px)}
+.mani{grid-column:1/span 8;font-family:"Fraunces",Georgia,serif;font-size:var(--t-h2);
+      line-height:1.06;letter-spacing:-.028em;font-variation-settings:"opsz" 100,"wght" 300,"SOFT" 24,"WONK" 1}
+.mani em{font-style:italic;color:var(--accent);font-variation-settings:"opsz" 100,"wght" 300,"SOFT" 60,"WONK" 1}
+.mani w{display:inline-block;overflow:hidden;vertical-align:bottom}
+.mani w i{display:inline-block;font-style:inherit;transform:translateY(102%);will-change:transform}
+.mani-note{grid-column:10/span 3;align-self:end;color:var(--ink-dim);font-size:var(--t-body);
+           border-left:1px solid var(--rule);padding-left:18px}
+@media(max-width:1000px){.mani{grid-column:1/span 12}.mani-note{grid-column:1/span 12;margin-top:40px}}
+
+/* ── 11. INSTRUMENT ────────────────────────────────────────────── */
+#instrument .body{grid-column:1/span 12;display:grid;grid-template-columns:1fr clamp(230px,20vw,320px);
+  gap:clamp(24px,3.4vw,64px);align-items:start}
+@media(max-width:960px){#instrument .body{grid-template-columns:1fr}}
+#instr-svg{width:100%;height:auto;overflow:visible}
+#instr-svg .draw{stroke:var(--ink);fill:none;stroke-width:1;vector-effect:non-scaling-stroke;
+  stroke-linecap:round;stroke-linejoin:round;
+  transition:stroke-dashoffset 1.5s var(--ease),stroke .6s,opacity .5s}
+#instr-svg .thin{stroke-width:.5;opacity:.5}
+#instr-svg .hatch{fill:url(#hatch);stroke:none;opacity:0;transition:opacity 1.1s .7s var(--ease)}
+#instr-svg.drawn .hatch{opacity:.55}
+#instr-svg .beam{stroke:var(--accent);stroke-width:1;fill:none;opacity:0;
+  stroke-dasharray:3 5;transition:opacity .8s 1.2s}
+#instr-svg.drawn .beam{opacity:.85;animation:beamflow 1.6s linear infinite}
+@keyframes beamflow{to{stroke-dashoffset:-16}}
+.callout{cursor:none}
+.callout circle{fill:var(--void);stroke:var(--ink);stroke-width:1;vector-effect:non-scaling-stroke;
+  transition:fill .35s var(--ease),stroke .35s}
+.callout text{font-family:"JetBrains Mono",monospace;font-size:10px;fill:var(--ink);
+  text-anchor:middle;dominant-baseline:central;transition:fill .35s}
+.callout:hover circle,.callout.on circle{fill:var(--accent);stroke:var(--accent)}
+.callout:hover text,.callout.on text{fill:var(--void)}
+.callout .lead{stroke:var(--rule);stroke-width:1;vector-effect:non-scaling-stroke}
+.i-panel{border:1px solid var(--rule);padding:18px 20px 20px;position:sticky;top:112px;
+  background:color-mix(in srgb,var(--void) 74%,transparent);
+  backdrop-filter:blur(18px) saturate(.85);
+  transition:background-color .9s var(--ease),border-color .9s var(--ease)}
+.i-panel .idx{color:var(--accent);margin-bottom:10px}
+.i-panel h3{font-family:"Fraunces",Georgia,serif;font-size:var(--t-h3);
+  font-variation-settings:"opsz" 40,"wght" 350,"SOFT" 30,"WONK" 0;margin-bottom:10px;letter-spacing:-.02em}
+.i-panel p{color:var(--ink-dim);font-size:var(--t-body);max-width:38ch}
+.i-panel .swap{animation:fadeup .5s var(--ease) both}
+@keyframes fadeup{from{opacity:0;transform:translateY(8px)}}
+.i-list{margin-top:26px;display:flex;flex-direction:column;gap:0}
+.i-list button{display:flex;gap:12px;align-items:baseline;padding:9px 0;border-top:1px solid var(--rule-soft);
+  text-align:left;color:var(--ink-faint);transition:color .3s;width:100%}
+.i-list button:hover,.i-list button.on{color:var(--ink)}
+.i-list button .n{color:var(--accent);flex:none;width:2ch}
+
+/* ── 12. SPECTRUM ──────────────────────────────────────────────── */
+#spectrum .body{grid-column:1/span 12}
+.spec-shell{position:relative;border:1px solid var(--rule);background:var(--plate-bg);
+  padding:clamp(14px,1.6vw,26px);backdrop-filter:blur(14px) saturate(.9);
+  transition:border-color .9s var(--ease),background-color .9s var(--ease)}
+#spec-canvas{width:100%;height:clamp(190px,20vw,290px);cursor:none;touch-action:none}
+.spec-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;
+  color:var(--ink-faint);gap:20px;flex-wrap:wrap}
+.spec-read{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gut);margin-top:18px;
+  border-top:1px solid var(--rule);padding-top:14px}
+.spec-read .cell .k{color:var(--ink-faint);margin-bottom:5px}
+.spec-read .cell .v{font-family:"Fraunces",Georgia,serif;font-size:clamp(19px,1.9vw,31px);
+  font-variation-settings:"opsz" 40,"wght" 350,"SOFT" 20,"WONK" 0;letter-spacing:-.02em;line-height:1.1}
+.spec-read .cell .v.el{color:var(--accent)}
+@media(max-width:760px){.spec-read{grid-template-columns:repeat(2,1fr);row-gap:20px}}
+.spec-hint{margin-top:12px;color:var(--ink-faint);display:flex;gap:18px;flex-wrap:wrap}
+
+/* ── 13. FIELD ─────────────────────────────────────────────────── */
+#field{padding-block:clamp(110px,13vw,200px);min-height:100svh;display:flex;flex-direction:column;
+  justify-content:center;position:relative;overflow:hidden}
+#field-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1;
+  opacity:.95;transition:opacity .9s}
+html[data-mode="archive"] #field-canvas{opacity:.8}
+#field .wrap{position:relative;z-index:1}
+.field-copy{grid-column:1/span 5}
+.field-copy h2{font-family:"Fraunces",Georgia,serif;font-size:var(--t-h2);letter-spacing:-.03em;
+  font-variation-settings:"opsz" 100,"wght" 300,"SOFT" 30,"WONK" 1;margin-bottom:22px}
+.field-copy .lead{color:var(--ink-dim)}
+.field-stats{grid-column:8/span 4;display:flex;flex-direction:column;gap:1px;align-self:end}
+.field-stats .row{display:flex;justify-content:space-between;align-items:baseline;
+  padding:11px 0;border-top:1px solid var(--rule)}
+.field-stats .row .v{font-family:"Fraunces",Georgia,serif;font-size:var(--t-h3);
+  font-variation-settings:"opsz" 40,"wght" 300,"SOFT" 20,"WONK" 0;letter-spacing:-.02em}
+@media(max-width:1000px){.field-copy{grid-column:1/span 12}.field-stats{grid-column:1/span 12;margin-top:44px}}
+
+/* ── 14. CYCLE ─────────────────────────────────────────────────── */
+#cycle .body{grid-column:1/span 12}
+.cyc-shell{position:relative}
+#cyc-canvas{width:100%;height:clamp(280px,32vw,470px);cursor:none;touch-action:none}
+.cyc-legend{display:flex;gap:clamp(16px,2.4vw,40px);flex-wrap:wrap;margin-top:16px;
+  padding-top:14px;border-top:1px solid var(--rule);color:var(--ink-faint)}
+.cyc-legend i{display:inline-block;width:16px;height:2px;vertical-align:middle;margin-right:7px}
+.cyc-tip{position:absolute;pointer-events:none;opacity:0;transition:opacity .25s;
+  border:1px solid var(--rule);background:var(--void-2);padding:9px 12px;z-index:5;
+  backdrop-filter:blur(10px);white-space:nowrap;transform:translate(-50%,-118%)}
+.cyc-tip .y{color:var(--accent)}
+
+/* ── 15. PLATES ────────────────────────────────────────────────── */
+#plates .body{grid-column:1/span 12}
+.plate-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.8vw,30px)}
+@media(max-width:1000px){.plate-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.plate-grid{grid-template-columns:1fr}}
+.plate{
+  position:relative;border:1px solid var(--plate-edge);background:var(--plate-bg);
+  padding:11px;text-align:left;overflow:hidden;width:100%;
+  transition:border-color .5s var(--ease),transform .6s var(--ease),background-color .9s var(--ease);
+}
+.plate::after{content:"";position:absolute;inset:0;pointer-events:none;
+  box-shadow:inset 0 0 60px -14px rgba(0,0,0,.7);opacity:.55;transition:opacity .5s}
+html[data-mode="archive"] .plate::after{box-shadow:inset 0 0 60px -16px rgba(70,52,26,.45)}
+.plate:hover{border-color:var(--accent);transform:translateY(-3px)}
+.plate .frame{position:relative;aspect-ratio:1/1;overflow:hidden;background:#000;
+  transition:filter .6s var(--ease)}
+html[data-mode="archive"] .plate .frame{background:#ded5c3}
+.plate canvas{width:100%;height:100%;display:block;transition:transform .9s var(--ease),filter .6s}
+.plate:hover canvas{transform:scale(1.045)}
+.plate .cap{display:flex;justify-content:space-between;align-items:baseline;margin-top:11px;gap:12px}
+.plate .cap .t{font-family:"Fraunces",Georgia,serif;font-size:clamp(15px,1.15vw,20px);
+  font-variation-settings:"opsz" 30,"wght" 350,"SOFT" 20,"WONK" 0;letter-spacing:-.015em}
+.plate .cap .d{color:var(--ink-faint);flex:none}
+.plate .band{position:absolute;left:11px;top:11px;z-index:2;padding:3px 7px;
+  background:var(--void);border:1px solid var(--plate-edge);color:var(--ink-dim);
+  font-family:"JetBrains Mono",monospace;font-size:8.5px;letter-spacing:.15em;text-transform:uppercase}
+
+#lightbox{position:fixed;inset:0;z-index:120;display:none;
+  background:color-mix(in srgb,var(--void) 88%,transparent);
+  backdrop-filter:blur(24px) saturate(.85);padding:var(--gut);place-items:center}
+#lightbox.on{display:grid}
+#lightbox .lb-inner{width:min(1100px,100%);display:grid;grid-template-columns:1.15fr .85fr;
+  gap:clamp(20px,3vw,52px);align-items:center}
+@media(max-width:900px){#lightbox .lb-inner{grid-template-columns:1fr}}
+#lightbox .lb-frame{position:relative;aspect-ratio:1/1;overflow:hidden;border:1px solid var(--plate-edge);background:#000}
+html[data-mode="archive"] #lightbox .lb-frame{background:#ded5c3}
+#lightbox canvas{width:100%;height:100%}
+#lightbox h3{font-family:"Fraunces",Georgia,serif;font-size:var(--t-h2);letter-spacing:-.03em;
+  font-variation-settings:"opsz" 90,"wght" 300,"SOFT" 30,"WONK" 1;margin-bottom:16px}
+#lightbox .lb-meta{display:grid;grid-template-columns:1fr 1fr;gap:1px 20px;margin-top:22px}
+#lightbox .lb-meta div{padding:9px 0;border-top:1px solid var(--rule)}
+#lightbox .lb-meta .k{color:var(--ink-faint);display:block;margin-bottom:3px}
+#lb-close{position:absolute;top:var(--gut);right:var(--gut);display:flex;align-items:center;gap:9px}
+
+/* ── 16. TOTALITY / COLOPHON ───────────────────────────────────── */
+#totality{min-height:128svh;display:flex;align-items:flex-end;justify-content:center;text-align:center;
+  position:relative;padding-bottom:20vh}
+#totality .t-inner{max-width:780px}
+#totality h2{font-family:"Fraunces",Georgia,serif;font-size:var(--t-h1);line-height:.88;
+  letter-spacing:-.04em;font-variation-settings:"opsz" 144,"wght" 200,"SOFT" 40,"WONK" 1}
+#totality .t-lede{margin:26px auto 0;max-width:46ch;color:var(--ink-dim);font-size:var(--t-lead);font-weight:300}
+#colophon{padding-block:clamp(120px,14vw,210px) clamp(130px,13vw,200px);
+  position:relative;z-index:2;
+  background:linear-gradient(to bottom,transparent 0%,var(--void) 34%,var(--void) 100%)}
+#colophon::before{content:"";position:absolute;left:var(--gut);right:var(--gut);
+  top:clamp(90px,11vw,170px);height:1px;background:var(--rule)}
+#colophon .grid{row-gap:38px}
+.col-a{grid-column:1/span 4}.col-b{grid-column:6/span 3}.col-c{grid-column:9/span 4}
+@media(max-width:900px){.col-a,.col-b,.col-c{grid-column:1/span 12}}
+#colophon h4{margin-bottom:14px;color:var(--ink-faint)}
+#colophon p{color:var(--ink-dim);max-width:36ch}
+#colophon .sig{font-family:"Fraunces",Georgia,serif;font-size:var(--t-h3);letter-spacing:-.02em;
+  font-variation-settings:"opsz" 40,"wght" 300,"SOFT" 40,"WONK" 1;color:var(--ink);font-style:italic}
+.linklist{display:flex;flex-direction:column;gap:0}
+.linklist a{padding:8px 0;border-top:1px solid var(--rule-soft);display:flex;justify-content:space-between;
+  color:var(--ink-dim);transition:color .3s,padding-left .4s var(--ease)}
+.linklist a:hover{color:var(--accent);padding-left:7px}
+
+/* ── 17. REVEAL UTILITIES ──────────────────────────────────────── */
+.rv{opacity:0;transform:translateY(22px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.rv-d1{transition-delay:.08s}.rv-d2{transition-delay:.16s}.rv-d3{transition-delay:.24s}.rv-d4{transition-delay:.32s}
+.sw{display:block;overflow:hidden}
+.sw>*{display:block;transform:translateY(105%);transition:transform 1.05s var(--ease)}
+.sw.in>*{transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .rv{opacity:1;transform:none}.sw>*{transform:none}
+}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.5s;mix-blend-mode:normal}
+::view-transition-group(plate-morph){animation-duration:.62s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
+::view-transition-old(plate-morph),::view-transition-new(plate-morph){
+  animation-duration:.62s;height:100%;object-fit:cover;mix-blend-mode:normal}
+</style>
+</head>
+<body>
+
+<!-- ═══ SVG DEFS — filters & patterns used across the page ═══ -->
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <defs>
+    <pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(38)">
+      <line x1="0" y1="0" x2="0" y2="5" stroke="currentColor" stroke-width=".6" opacity=".55"/>
+    </pattern>
+    <pattern id="hatch2" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(-42)">
+      <line x1="0" y1="0" x2="0" y2="3" stroke="currentColor" stroke-width=".5" opacity=".4"/>
+    </pattern>
+    <filter id="f-paper" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" seed="7" result="n"/>
+      <feColorMatrix in="n" type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope=".5"/></feComponentTransfer>
+    </filter>
+    <filter id="f-displace">
+      <feTurbulence type="fractalNoise" baseFrequency="0.014 0.03" numOctaves="3" seed="11" result="t">
+        <animate attributeName="baseFrequency" dur="14s" values="0.014 0.03;0.022 0.016;0.014 0.03" repeatCount="indefinite"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="t" scale="0" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="f-emulsion">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3" result="g"/>
+      <feColorMatrix in="g" type="saturate" values="0" result="gm"/>
+      <feBlend in="SourceGraphic" in2="gm" mode="multiply"/>
+    </filter>
+  </defs>
+</svg>
+
+<!-- ═══ WEBGL STAGE ═══ -->
+<div id="stage"><canvas id="gl"></canvas></div>
+<div id="glfallback"></div>
+<svg id="paper" aria-hidden="true"><rect width="100%" height="100%" filter="url(#f-paper)" opacity=".9"/></svg>
+<div id="grain" aria-hidden="true"></div>
+
+<!-- ═══ PRELOADER ═══ -->
+<div id="pre" role="status" aria-label="Loading">
+  <div class="inner">
+    <div class="preword" id="pre-word" aria-hidden="true"></div>
+    <div class="sub mono">Institute of Solar Memory · Isla Sombra</div>
+    <canvas id="precanvas"></canvas>
+    <div class="foot mono">
+      <div class="stat" id="pre-stat">Awaiting first light</div>
+      <div class="tnum" id="pre-num">0.00</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CURSOR ═══ -->
+<div id="cur" aria-hidden="true"><div class="ring"></div><div class="dot"></div><div class="lbl"></div></div>
+
+<!-- ═══ CHROME ═══ -->
+<div id="prog" aria-hidden="true"></div>
+<div id="chrome">
+  <header class="bar" id="bar-top">
+    <a href="#hero" class="mark" data-cur="Top">
+      <span class="glyph"></span>
+      <span class="name">HELIOGRAPH</span>
+    </a>
+    <span class="mono faint" style="letter-spacing:.22em">EST. MDCCCLXXIV</span>
+    <div class="spacer"></div>
+    <button class="tog snd" id="snd-btn" aria-pressed="false" data-cur="Listen">
+      <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="txt">Sound</span>
+    </button>
+    <button class="tog" id="mode-btn" data-cur="Switch">
+      <span class="swatch" aria-hidden="true"></span>
+      <span class="txt" id="mode-txt">Observation</span>
+    </button>
+  </header>
+
+  <nav id="rail" aria-label="Sections">
+    <a href="#hero"       data-sec="hero"><span class="rlbl">First Light</span><span class="rtick"></span></a>
+    <a href="#manifesto"  data-sec="manifesto"><span class="rlbl">Memory</span><span class="rtick"></span></a>
+    <a href="#instrument" data-sec="instrument"><span class="rlbl">Instrument</span><span class="rtick"></span></a>
+    <a href="#spectrum"   data-sec="spectrum"><span class="rlbl">Signature</span><span class="rtick"></span></a>
+    <a href="#field"      data-sec="field"><span class="rlbl">Field</span><span class="rtick"></span></a>
+    <a href="#cycle"      data-sec="cycle"><span class="rlbl">Cycle</span><span class="rtick"></span></a>
+    <a href="#plates"     data-sec="plates"><span class="rlbl">Archive</span><span class="rtick"></span></a>
+    <a href="#totality"   data-sec="totality"><span class="rlbl">Totality</span><span class="rtick"></span></a>
+  </nav>
+
+  <footer class="bar" id="bar-bot">
+    <div class="readout mono">
+      <span>Plate <b class="tnum" id="r-plate">54 118</b></span>
+      <span class="opt">Seeing <b class="tnum" id="r-see">2.1″</b></span>
+      <span class="opt">Wolf № <b class="tnum" id="r-wolf">137</b></span>
+      <span>Flux <b class="tnum" id="r-flux">164.2</b></span>
+    </div>
+    <div class="spacer"></div>
+    <span class="mono faint tnum" id="r-clock">00:00:00 UTC</span>
+  </footer>
+</div>
+
+<main>
+<!-- ═══ 01 · HERO ═══════════════════════════════════════════════ -->
+<section id="hero" data-sec="hero">
+  <div class="wrap">
+    <div class="h-kicker mono rv"><span class="ln"></span><span>28°14′N&nbsp; 16°38′W</span><span class="ln"></span><span>Continuous record since 1874</span></div>
+    <h1 id="wordmark" aria-label="Heliograph"></h1>
+    <div class="h-sub">
+      <span class="mono dim">Institute of Solar Memory</span>
+      <span class="big">one star, observed without interruption</span>
+    </div>
+    <div class="grid h-cols">
+      <div class="c-a rv rv-d2">
+        <p class="lead">Every clear morning since the third of April, 1874, this institute has made one photograph of the sun. Nineteen keepers. Fifty-four thousand plates. A single unbroken sentence about a star that does not know we are writing it.</p>
+      </div>
+      <div class="c-b rv rv-d3">
+        <a href="#manifesto" class="scrollcue mono" data-cur="Descend"><span class="track"></span><span>Scroll to observe</span></a>
+      </div>
+      <div class="c-c rv rv-d4">
+        <div class="mono faint">Current observation</div>
+        <div class="mono dim" style="margin-top:8px;line-height:2">
+          Aperture 254&nbsp;mm<br>Hα 656.28&nbsp;nm<br>Exposure 1/2000&nbsp;s
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 02 · MANIFESTO ══════════════════════════════════════════ -->
+<section id="manifesto" data-sec="manifesto">
+  <div class="wrap grid">
+    <p class="mani" id="mani-text">We do not study the sun. We <em>remember</em> it — one plate each day, for a hundred and fifty years, so that some later eye might read what ours could only record.</p>
+    <div class="mani-note rv">
+      <div class="mono faint" style="margin-bottom:10px">Keeper&rsquo;s note, 1949</div>
+      <p>&ldquo;The instrument does not care whether anyone is watching. That is the whole of its virtue, and most of its cruelty.&rdquo;</p>
+      <div class="mono faint" style="margin-top:12px">— A. Verdú, seventh keeper</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 03 · INSTRUMENT ═════════════════════════════════════════ -->
+<section id="instrument" class="sec" data-sec="instrument">
+  <div class="wrap grid">
+    <div class="sechead mono" style="grid-column:1/span 12">
+      <span class="num">§ 02</span><span class="ttl">The Instrument</span>
+      <span class="meta">Spectroheliograph No. 4 · installed 1911</span>
+    </div>
+    <div class="body">
+      <div>
+        <svg id="instr-svg" viewBox="0 0 920 470" role="img" aria-label="Technical drawing of a spectroheliograph">
+          <!-- ground -->
+          <line class="draw thin" x1="30" y1="392" x2="890" y2="392"/>
+          <g class="hatch" style="color:var(--ink)"><rect x="30" y="392" width="860" height="16"/></g>
+
+          <!-- incoming sunlight -->
+          <g class="draw thin">
+            <line x1="34" y1="44" x2="128" y2="138"/><line x1="60" y1="30" x2="150" y2="120"/>
+            <line x1="20" y1="72" x2="106" y2="158"/>
+          </g>
+          <circle class="draw" cx="46" cy="40" r="13" style="--len:82"/>
+          <g class="draw thin">
+            <line x1="46" y1="18" x2="46" y2="8"/><line x1="24" y1="40" x2="14" y2="40"/>
+            <line x1="30" y1="24" x2="23" y2="17"/><line x1="62" y1="24" x2="69" y2="17"/>
+            <line x1="30" y1="56" x2="23" y2="63"/>
+          </g>
+
+          <!-- 1. heliostat mirror + polar mount -->
+          <g>
+            <path class="draw" d="M102 164 L176 90 L184 98 L110 172 Z" style="--len:210"/>
+            <path class="draw" d="M143 131 L143 196" style="--len:66"/>
+            <circle class="draw" cx="143" cy="204" r="9" style="--len:57"/>
+            <path class="draw" d="M143 213 L143 330" style="--len:118"/>
+            <path class="draw" d="M112 330 L174 330 L166 392 L120 392 Z" style="--len:250"/>
+            <g class="hatch" style="color:var(--ink)"><path d="M112 330 L174 330 L166 392 L120 392 Z"/></g>
+            <!-- declination arc with ticks -->
+            <path class="draw thin" d="M108 204 A 35 35 0 0 1 178 204" style="--len:112"/>
+            <g class="draw thin"><line x1="143" y1="169" x2="143" y2="161"/><line x1="118" y1="179" x2="112" y2="173"/><line x1="168" y1="179" x2="174" y2="173"/></g>
+            <!-- clock drive -->
+            <rect class="draw thin" x="90" y="248" width="46" height="42" style="--len:176"/>
+            <circle class="draw thin" cx="106" cy="266" r="9" style="--len:57"/>
+            <circle class="draw thin" cx="122" cy="278" r="6" style="--len:38"/>
+          </g>
+
+          <!-- optical bench -->
+          <path class="draw" d="M206 214 L868 214 L868 226 L206 226 Z" style="--len:1350"/>
+          <g class="hatch" style="color:var(--ink)"><rect x="206" y="214" width="662" height="12"/></g>
+          <g class="draw thin">
+            <path d="M262 226 L242 392 M262 226 L288 392"/>
+            <path d="M690 226 L668 392 M690 226 L716 392"/>
+            <path d="M242 356 L288 356 M668 356 L716 356"/>
+          </g>
+
+          <!-- 2. objective lens -->
+          <path class="draw" d="M248 88 C268 116 268 160 248 188 C228 160 228 116 248 88 Z" style="--len:240"/>
+          <line class="draw thin" x1="248" y1="188" x2="248" y2="214"/>
+
+          <!-- 3. entrance slit plate -->
+          <path class="draw" d="M356 96 L368 96 L368 130 L356 130 Z M356 142 L368 142 L368 180 L356 180 Z" style="--len:180"/>
+          <g class="hatch" style="color:var(--ink)"><rect x="356" y="96" width="12" height="34"/><rect x="356" y="142" width="12" height="38"/></g>
+          <line class="draw thin" x1="362" y1="180" x2="362" y2="214"/>
+
+          <!-- 4. collimator -->
+          <path class="draw" d="M452 86 C470 116 470 160 452 190 C434 160 434 116 452 86 Z" style="--len:246"/>
+          <line class="draw thin" x1="452" y1="190" x2="452" y2="214"/>
+
+          <!-- 5. prism train -->
+          <path class="draw" d="M498 178 L566 178 L532 100 Z" style="--len:250"/>
+          <path class="draw" d="M580 178 L648 178 L614 100 Z" style="--len:250"/>
+          <g class="hatch" style="color:var(--ink)"><path d="M498 178 L566 178 L532 100 Z"/><path d="M580 178 L648 178 L614 100 Z"/></g>
+          <line class="draw thin" x1="532" y1="178" x2="532" y2="214"/>
+          <line class="draw thin" x1="614" y1="178" x2="614" y2="214"/>
+
+          <!-- 6. camera lens -->
+          <path class="draw" d="M716 94 C734 120 734 158 716 184 C698 158 698 120 716 94 Z" style="--len:222"/>
+          <line class="draw thin" x1="716" y1="184" x2="716" y2="214"/>
+
+          <!-- 7. plate cassette -->
+          <path class="draw" d="M806 88 L846 88 L846 190 L806 190 Z" style="--len:284"/>
+          <path class="draw thin" d="M812 94 L840 94 L840 184 L812 184 Z" style="--len:236"/>
+          <g class="hatch" style="color:var(--ink)"><rect x="812" y="94" width="28" height="90"/></g>
+          <line class="draw thin" x1="826" y1="190" x2="826" y2="214"/>
+          <path class="draw thin" d="M846 118 L868 118 M846 160 L868 160" style="--len:44"/>
+
+          <!-- beam path -->
+          <g class="beam">
+            <path d="M143 131 L248 131"/>
+            <path d="M248 108 L362 131 M248 154 L362 131"/>
+            <path d="M362 131 L452 104 M362 131 L452 158"/>
+            <path d="M452 118 L508 150 M452 144 L508 150"/>
+            <path d="M540 138 L588 128 M540 150 L588 142"/>
+            <path d="M626 122 L716 108 M626 138 L716 128 M626 152 L716 148"/>
+            <path d="M716 108 L826 126 M716 148 L826 146"/>
+          </g>
+
+          <!-- callouts -->
+          <g class="callout" data-i="0" tabindex="0" role="button" aria-label="Heliostat">
+            <line class="lead" x1="196" y1="58" x2="152" y2="112"/>
+            <circle cx="204" cy="50" r="13"/><text x="204" y="51">1</text>
+          </g>
+          <g class="callout" data-i="1" tabindex="0" role="button" aria-label="Objective">
+            <line class="lead" x1="248" y1="66" x2="248" y2="96"/>
+            <circle cx="248" cy="52" r="13"/><text x="248" y="53">2</text>
+          </g>
+          <g class="callout" data-i="2" tabindex="0" role="button" aria-label="Entrance slit">
+            <line class="lead" x1="362" y1="272" x2="362" y2="240"/>
+            <circle cx="362" cy="286" r="13"/><text x="362" y="287">3</text>
+          </g>
+          <g class="callout" data-i="3" tabindex="0" role="button" aria-label="Collimator">
+            <line class="lead" x1="452" y1="66" x2="452" y2="92"/>
+            <circle cx="452" cy="52" r="13"/><text x="452" y="53">4</text>
+          </g>
+          <g class="callout" data-i="4" tabindex="0" role="button" aria-label="Prism train">
+            <line class="lead" x1="573" y1="62" x2="573" y2="96"/>
+            <circle cx="573" cy="48" r="13"/><text x="573" y="49">5</text>
+          </g>
+          <g class="callout" data-i="5" tabindex="0" role="button" aria-label="Camera lens">
+            <line class="lead" x1="716" y1="66" x2="716" y2="98"/>
+            <circle cx="716" cy="52" r="13"/><text x="716" y="53">6</text>
+          </g>
+          <g class="callout" data-i="6" tabindex="0" role="button" aria-label="Plate cassette">
+            <line class="lead" x1="874" y1="66" x2="846" y2="92"/>
+            <circle cx="882" cy="54" r="13"/><text x="882" y="55">7</text>
+          </g>
+
+          <!-- scale bar -->
+          <g class="draw thin"><path d="M30 440 L170 440 M30 434 L30 446 M170 434 L170 446 M100 436 L100 444"/></g>
+          <text class="mono" x="30" y="462" fill="var(--ink-faint)" style="font-size:9px;letter-spacing:.14em">0—1 METRE</text>
+        </svg>
+      </div>
+
+      <aside>
+        <div class="i-panel">
+          <div class="idx mono" id="i-idx">Part 01 / 07</div>
+          <div id="i-swap">
+            <h3 id="i-title">Heliostat</h3>
+            <p id="i-desc">A flat mirror on a polar axis, turned by a falling weight and a governor. It holds the sun still — the one thing in this building permitted to move so that nothing else has to.</p>
+          </div>
+          <div class="i-list" id="i-list"></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 04 · SPECTRUM ═══════════════════════════════════════════ -->
+<section id="spectrum" class="sec" data-sec="spectrum">
+  <div class="wrap grid">
+    <div class="sechead mono" style="grid-column:1/span 12">
+      <span class="num">§ 03</span><span class="ttl">The Signature</span>
+      <span class="meta">Fraunhofer absorption · 380–760 nm</span>
+    </div>
+    <div class="body">
+      <div class="grid" style="margin-bottom:clamp(28px,3.4vw,56px)">
+        <p class="lead rv" style="grid-column:1/span 5">Sunlight arrives complete and leaves with pieces missing. Every dark line is an element standing between the star&rsquo;s core and this island, taking its portion of the light.</p>
+        <p class="rv rv-d2 dim" style="grid-column:7/span 4;align-self:end">Drag across the band to inspect a line. With sound enabled, each absorption is voiced at a frequency scaled from its wavelength — the spectrum, heard.</p>
+      </div>
+      <div class="spec-shell rv rv-d2">
+        <div class="spec-head mono">
+          <span>Plate 54 118 · Hα quadrant · 11 s exposure</span>
+          <span class="faint">Dispersion 0.42 nm · mm⁻¹</span>
+        </div>
+        <canvas id="spec-canvas" role="img" aria-label="Solar absorption spectrum with Fraunhofer lines"></canvas>
+        <div class="spec-read">
+          <div class="cell"><div class="k mono">Wavelength</div><div class="v tnum" id="s-wl">656.28</div></div>
+          <div class="cell"><div class="k mono">Element</div><div class="v el" id="s-el">Hydrogen</div></div>
+          <div class="cell"><div class="k mono">Fraunhofer</div><div class="v" id="s-fr">C</div></div>
+          <div class="cell"><div class="k mono">Depth</div><div class="v tnum" id="s-dp">0.86</div></div>
+        </div>
+        <div class="spec-hint mono faint">
+          <span>◀ Drag to scan ▶</span><span class="opt">Nine principal lines catalogued</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 05 · FIELD ══════════════════════════════════════════════ -->
+<section id="field" data-sec="field">
+  <canvas id="field-canvas" aria-hidden="true"></canvas>
+  <div class="wrap grid">
+    <div class="field-copy">
+      <div class="sechead mono" style="border-color:transparent;padding-bottom:6px;margin-bottom:18px">
+        <span class="num">§ 04</span><span class="ttl">The Field</span>
+      </div>
+      <h2 class="rv">Nothing here<br>is solid.</h2>
+      <p class="lead rv rv-d2">What looks like a surface is a lid of boiling gas one thousand kilometres thick, held in shape by a magnetic field that turns itself inside out every eleven years. The loops you see are not drawn. They are traced, one particle at a time, along the field as we last measured it.</p>
+      <p class="mono faint rv rv-d3" style="margin-top:26px">Move your cursor through the field</p>
+    </div>
+    <div class="field-stats">
+      <div class="row rv"><span class="mono faint">Photosphere</span><span class="v tnum">5 772 K</span></div>
+      <div class="row rv rv-d1"><span class="mono faint">Corona</span><span class="v tnum">1.9 MK</span></div>
+      <div class="row rv rv-d2"><span class="mono faint">Field strength, spot</span><span class="v tnum">0.31 T</span></div>
+      <div class="row rv rv-d3"><span class="mono faint">Rotation, equator</span><span class="v tnum">24.5 d</span></div>
+      <div class="row rv rv-d4"><span class="mono faint">Rotation, pole</span><span class="v tnum">34.0 d</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 06 · CYCLE ══════════════════════════════════════════════ -->
+<section id="cycle" class="sec" data-sec="cycle">
+  <div class="wrap grid">
+    <div class="sechead mono" style="grid-column:1/span 12">
+      <span class="num">§ 05</span><span class="ttl">The Cycle</span>
+      <span class="meta">Relative sunspot number · 1749–2025</span>
+    </div>
+    <div class="body">
+      <div class="grid" style="margin-bottom:clamp(24px,3vw,48px)">
+        <p class="lead rv" style="grid-column:1/span 5">Two hundred and seventy-six years of counting spots, and the star keeps almost the same time — eleven years, give or take, forever.</p>
+        <p class="rv rv-d2 dim" style="grid-column:7/span 4;align-self:end">The Institute&rsquo;s own plates begin at the vertical rule. Everything to its left we inherited from other people&rsquo;s patience.</p>
+      </div>
+      <div class="cyc-shell rv rv-d2">
+        <canvas id="cyc-canvas" role="img" aria-label="Sunspot number from 1749 to 2025"></canvas>
+        <div class="cyc-tip mono" id="cyc-tip"><span class="y" id="ct-y">1859</span> · <span id="ct-v">96</span> spots</div>
+        <div class="cyc-legend mono">
+          <span><i style="background:var(--amber)"></i>Smoothed monthly number</span>
+          <span><i style="background:var(--cak)"></i>Cycle maxima</span>
+          <span><i style="background:var(--ink-faint)"></i>Institute record begins 1874</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 07 · PLATES ═════════════════════════════════════════════ -->
+<section id="plates" class="sec" data-sec="plates">
+  <div class="wrap grid">
+    <div class="sechead mono" style="grid-column:1/span 12">
+      <span class="num">§ 06</span><span class="ttl">The Archive</span>
+      <span class="meta">Six plates of fifty-four thousand</span>
+    </div>
+    <div class="body">
+      <div class="grid" style="margin-bottom:clamp(28px,3.4vw,56px)">
+        <p class="lead rv" style="grid-column:1/span 5">Each plate is a single morning. Silver, gelatin, glass — and one star that never sat still for any of them.</p>
+      </div>
+      <div class="plate-grid" id="plate-grid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 08 · TOTALITY ═══════════════════════════════════════════ -->
+<section id="totality" data-sec="totality">
+  <div class="wrap t-inner">
+    <div class="mono rv" style="margin-bottom:26px;color:var(--ink-dim);text-shadow:0 0 14px var(--void),0 0 5px var(--void)">§ 07 &nbsp;·&nbsp; 09 JULY 2028 &nbsp;·&nbsp; 04ᵐ 11ˢ</div>
+    <h2 class="sw"><span>Totality</span></h2>
+    <p class="t-lede rv rv-d2">In two years the moon will cover this island completely, and for four minutes and eleven seconds the corona will be visible to the naked eye. We have been getting ready for a hundred and fifty years.</p>
+    <div class="rv rv-d3" style="margin-top:44px">
+      <a href="#hero" class="mono" data-cur="Return" style="border-bottom:1px solid var(--rule);padding-bottom:5px">Return to first light</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ═══ LIGHTBOX ═══ -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lb-title">
+  <button id="lb-close" class="mono" data-cur="Close"><span>Close</span><span aria-hidden="true">✕</span></button>
+  <div class="lb-inner">
+    <div class="lb-frame" id="lb-frame"></div>
+    <div>
+      <div class="mono faint" id="lb-band" style="margin-bottom:14px">Hα 656.3 nm</div>
+      <h3 id="lb-title">Quiet Disc</h3>
+      <p class="dim" id="lb-desc" style="max-width:38ch"></p>
+      <div class="lb-meta mono">
+        <div><span class="k faint">Plate</span><span id="lb-no">54 118</span></div>
+        <div><span class="k faint">Exposure</span><span id="lb-exp">1/2000 s</span></div>
+        <div><span class="k faint">Keeper</span><span id="lb-keep">A. Verdú</span></div>
+        <div><span class="k faint">Seeing</span><span id="lb-see">2.1″</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ COLOPHON ═══ -->
+<footer id="colophon">
+  <div class="wrap grid">
+    <div class="col-a">
+      <h4 class="mono">Colophon</h4>
+      <p>Every mark on this page is generated at runtime — the star is a raymarched volume, the spectrum is computed from wavelength, the plates are drawn in code. There is not one photograph in this document.</p>
+      <p class="sig" style="margin-top:22px">Designed &amp; built by Claude&nbsp;Opus&nbsp;5</p>
+    </div>
+    <div class="col-b">
+      <h4 class="mono">Type</h4>
+      <div class="linklist mono">
+        <a href="#instrument"><span>Fraunces</span><span class="faint">Display</span></a>
+        <a href="#spectrum"><span>Inter</span><span class="faint">Text</span></a>
+        <a href="#cycle"><span>JetBrains Mono</span><span class="faint">Data</span></a>
+      </div>
+      <h4 class="mono" style="margin-top:30px">Technique</h4>
+      <div class="mono faint" style="line-height:2.1">
+        WebGL2 volumetric raymarch<br>Multi-pass bloom · aberration<br>Curl-noise flow field<br>View Transitions
+      </div>
+    </div>
+    <div class="col-c">
+      <h4 class="mono">The Institute</h4>
+      <div class="linklist mono">
+        <a href="#hero"><span>First Light</span><span class="faint">01</span></a>
+        <a href="#instrument"><span>The Instrument</span><span class="faint">02</span></a>
+        <a href="#spectrum"><span>The Signature</span><span class="faint">03</span></a>
+        <a href="#field"><span>The Field</span><span class="faint">04</span></a>
+        <a href="#cycle"><span>The Cycle</span><span class="faint">05</span></a>
+        <a href="#plates"><span>The Archive</span><span class="faint">06</span></a>
+      </div>
+      <p class="mono faint" style="margin-top:26px;line-height:2">
+        Isla Sombra · 28°14′N 16°38′W<br>
+        A fiction, carefully kept.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   HELIOGRAPH · runtime
+   ─────────────────────────────────────────────────────────────────
+   A. core            B. webgl star      C. spectrum + audio
+   D. magnetic field  E. cycle chart     F. archive plates
+   ═══════════════════════════════════════════════════════════════════ */
+(function(){
+"use strict";
+
+/* ── A. CORE ─────────────────────────────────────────────────────── */
+const $  = (s,r)=>(r||document).querySelector(s);
+const $$ = (s,r)=>[...(r||document).querySelectorAll(s)];
+const clamp=(v,a,b)=>v<a?a:v>b?b:v;
+const lerp =(a,b,t)=>a+(b-a)*t;
+const smoothstep=(a,b,x)=>{const t=clamp((x-a)/(b-a),0,1);return t*t*(3-2*t);};
+const inv=(a,b,v)=>clamp((v-a)/(b-a),0,1);
+const easeOutCubic=t=>1-Math.pow(1-t,3);
+const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const html = document.documentElement;
+
+/* deterministic PRNG so every reload draws the same archive */
+function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+
+/* value noise for canvas work (the GPU has its own) */
+function makeNoise(seed){
+  const rnd=mulberry(seed), p=new Uint8Array(512);
+  const perm=[...Array(256).keys()];
+  for(let i=255;i>0;i--){const j=(rnd()*(i+1))|0;[perm[i],perm[j]]=[perm[j],perm[i]];}
+  for(let i=0;i<512;i++)p[i]=perm[i&255];
+  const fade=t=>t*t*t*(t*(t*6-15)+10);
+  const grad=(h,x,y)=>{const u=(h&1)?x:-x,v=(h&2)?y:-y;return u+v;};
+  return function(x,y){
+    const X=Math.floor(x)&255,Y=Math.floor(y)&255;
+    x-=Math.floor(x);y-=Math.floor(y);
+    const u=fade(x),v=fade(y);
+    const A=p[X]+Y,B=p[X+1]+Y;
+    return lerp(lerp(grad(p[A],x,y),grad(p[B],x-1,y),u),
+                lerp(grad(p[A+1],x,y-1),grad(p[B+1],x-1,y-1),u),v)*0.5;
+  };
+}
+function fbm2(n,x,y,oct,gain){let a=1,f=1,s=0,m=0;gain=gain||0.5;
+  for(let i=0;i<oct;i++){s+=a*n(x*f,y*f);m+=a;a*=gain;f*=2.02;}return s/m;}
+
+/* ── scroll driver: native scroll, spring-smoothed for animation ─── */
+const S = {y:0, sy:0, vel:0, energy:0, max:1, p:0, sp:0, vh:innerHeight, vw:innerWidth};
+function measure(){
+  S.vh=innerHeight; S.vw=innerWidth;
+  S.max=Math.max(1, document.documentElement.scrollHeight - S.vh);
+}
+addEventListener("resize",()=>{measure();layout();},{passive:true});
+addEventListener("scroll",()=>{S.y=scrollY;},{passive:true});
+
+/* ── cursor ──────────────────────────────────────────────────────── */
+const cur=$("#cur"), curRing=$("#cur .ring"), curLbl=$("#cur .lbl");
+const M={x:-400,y:-400,tx:-400,ty:-400,
+         nx:0,ny:0,down:false,seen:false,magnet:null};
+if(!matchMedia("(pointer:coarse)").matches){
+  addEventListener("pointermove",e=>{
+    if(!M.seen){M.seen=true;M.x=e.clientX;M.y=e.clientY;}
+    M.tx=e.clientX;M.ty=e.clientY;
+    M.nx=(e.clientX/innerWidth)*2-1; M.ny=1-(e.clientY/innerHeight)*2;
+  },{passive:true});
+  addEventListener("pointerdown",()=>{M.down=true;cur.classList.add("press");},{passive:true});
+  addEventListener("pointerup",()=>{M.down=false;cur.classList.remove("press");},{passive:true});
+  document.addEventListener("pointerleave",()=>{cur.classList.add("hide");});
+  document.addEventListener("pointerenter",()=>{cur.classList.remove("hide");});
+}
+/* hot targets + magnetism */
+function bindCursor(){
+  $$("a,button,[data-cur],.callout,#spec-canvas,#cyc-canvas").forEach(el=>{
+    if(el.__cb)return; el.__cb=1;
+    el.addEventListener("pointerenter",()=>{
+      cur.classList.add("hot");
+      curLbl.textContent = el.dataset.cur || (el.tagName==="CANVAS"?"Scan":"Open");
+      if(el.dataset.magnet!==undefined||el.classList.contains("tog")||el.classList.contains("callout"))M.magnet=el;
+    });
+    el.addEventListener("pointerleave",()=>{cur.classList.remove("hot");M.magnet=null;});
+  });
+}
+
+/* ── mode (observation ↔ archive) ────────────────────────────────── */
+const MODE={v:0, target:0};              // 0 obs · 1 archive
+const modeBtn=$("#mode-btn"), modeTxt=$("#mode-txt");
+function applyMode(next){
+  html.dataset.mode = next ? "archive":"observation";
+  modeTxt.textContent = next ? "Archive":"Observation";
+  modeBtn.setAttribute("aria-pressed", next?"true":"false");
+  MODE.target = next?1:0;
+  document.querySelector('meta[name=theme-color]').setAttribute("content", next?"#e8e1d3":"#07070b");
+  drawCycle(); drawSpectrum(); schedulePlates();
+  Sound.tick(next?880:440);
+}
+modeBtn.addEventListener("click",()=>{
+  const next = html.dataset.mode==="observation";
+  const isNext=()=>(html.dataset.mode==="archive")===next;
+  if(document.startViewTransition && !RM){
+    const r=modeBtn.getBoundingClientRect();
+    const cx=r.left+r.width/2, cy=r.top+r.height/2;
+    const far=Math.hypot(Math.max(cx,innerWidth-cx),Math.max(cy,innerHeight-cy));
+    try{
+      const t=document.startViewTransition(()=>applyMode(next));
+      t.ready.then(()=>{
+        document.documentElement.animate(
+          {clipPath:[`circle(0px at ${cx}px ${cy}px)`,`circle(${far}px at ${cx}px ${cy}px)`]},
+          {duration:900,easing:"cubic-bezier(.22,1,.36,1)",pseudoElement:"::view-transition-new(root)"});
+      }).catch(()=>{});
+      // A stalled transition must never eat the toggle.
+      setTimeout(()=>{ if(!isNext()) applyMode(next); },700);
+      return;
+    }catch(e){}
+  }
+  applyMode(next);
+});
+
+/* ── audio: everything synthesised, nothing loaded ───────────────── */
+const Sound = {
+  on:false, ctx:null, master:null, drone:null, windGain:null, ready:false,
+  init(){
+    if(this.ctx) return;
+    const AC = window.AudioContext||window.webkitAudioContext; if(!AC)return;
+    const c=this.ctx=new AC();
+    const m=this.master=c.createGain(); m.gain.value=0; m.connect(c.destination);
+    // low drone: two detuned saws through a slow-swept lowpass
+    const g=c.createGain(); g.gain.value=.10;
+    const f=c.createBiquadFilter(); f.type="lowpass"; f.frequency.value=210; f.Q.value=5.5;
+    const lfo=c.createOscillator(); lfo.frequency.value=.045;
+    const lfoG=c.createGain(); lfoG.gain.value=120;
+    lfo.connect(lfoG); lfoG.connect(f.frequency); lfo.start();
+    [55,55.4,82.5].forEach((hz,i)=>{
+      const o=c.createOscillator(); o.type=i===2?"triangle":"sawtooth"; o.frequency.value=hz;
+      const og=c.createGain(); og.gain.value=i===2?.16:.30;
+      o.connect(og); og.connect(f); o.start();
+    });
+    f.connect(g); g.connect(m); this.drone=g;
+    // solar wind: filtered noise, amplitude follows scroll energy
+    const len=c.sampleRate*3, buf=c.createBuffer(1,len,c.sampleRate), d=buf.getChannelData(0);
+    let last=0; for(let i=0;i<len;i++){const w=Math.random()*2-1; last=(last+.02*w)/1.02; d[i]=last*3.2;}
+    const src=c.createBufferSource(); src.buffer=buf; src.loop=true;
+    const bp=c.createBiquadFilter(); bp.type="bandpass"; bp.frequency.value=780; bp.Q.value=.7;
+    const wg=this.windGain=c.createGain(); wg.gain.value=0;
+    src.connect(bp); bp.connect(wg); wg.connect(m); src.start();
+    this.ready=true;
+  },
+  toggle(){
+    this.init(); if(!this.ctx)return false;
+    if(this.ctx.state==="suspended")this.ctx.resume();
+    this.on=!this.on;
+    this.master.gain.cancelScheduledValues(this.ctx.currentTime);
+    this.master.gain.setTargetAtTime(this.on?.5:0,this.ctx.currentTime,.5);
+    return this.on;
+  },
+  tick(hz){
+    if(!this.on||!this.ctx)return;
+    const c=this.ctx,t=c.currentTime;
+    const o=c.createOscillator(),g=c.createGain();
+    o.type="sine"; o.frequency.value=hz||620;
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.05,t+.006);
+    g.gain.exponentialRampToValueAtTime(.0001,t+.14);
+    o.connect(g); g.connect(this.master); o.start(t); o.stop(t+.16);
+  },
+  /* the spectrum, voiced: wavelength → pitch */
+  line(nm,depth){
+    if(!this.on||!this.ctx)return;
+    const c=this.ctx,t=c.currentTime;
+    const hz = 180 * Math.pow(2, (760-nm)/95);
+    const o=c.createOscillator(),o2=c.createOscillator(),g=c.createGain(),f=c.createBiquadFilter();
+    o.type="sine"; o.frequency.value=hz;
+    o2.type="sine"; o2.frequency.value=hz*2.004;
+    f.type="lowpass"; f.frequency.value=hz*4.5; f.Q.value=2;
+    const a=.02+depth*.07;
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(a,t+.02);
+    g.gain.exponentialRampToValueAtTime(.0001,t+.9);
+    o.connect(f); o2.connect(f); f.connect(g); g.connect(this.master);
+    o.start(t);o2.start(t);o.stop(t+1);o2.stop(t+1);
+  },
+  energy(e){ if(this.windGain&&this.ctx) this.windGain.gain.setTargetAtTime(e*.16,this.ctx.currentTime,.25); }
+};
+const sndBtn=$("#snd-btn");
+sndBtn.addEventListener("click",()=>{
+  const on=Sound.toggle();
+  sndBtn.setAttribute("aria-pressed",on?"true":"false");
+  if(on)Sound.tick(523.25);
+});
+
+/* ── reveals ─────────────────────────────────────────────────────── */
+const revIO=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){e.target.classList.add("in"); revIO.unobserve(e.target);} });
+},{rootMargin:"0px 0px -12% 0px",threshold:.12});
+function bindReveals(){ $$(".rv:not(.in), .sw:not(.in)").forEach(el=>revIO.observe(el)); }
+
+/* section index rail */
+const rail=$$("#rail a");
+const secIO=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      const id=e.target.dataset.sec;
+      rail.forEach(a=>a.classList.toggle("on",a.dataset.sec===id));
+    }
+  });
+},{rootMargin:"-45% 0px -45% 0px"});
+$$("[data-sec]").forEach(s=>{ if(s.tagName==="SECTION")secIO.observe(s); });
+
+/* ── word/character splitting ────────────────────────────────────── */
+function splitChars(el,text){
+  el.textContent="";
+  [...text].forEach((ch,i)=>{
+    const s=document.createElement("span");
+    s.textContent=ch; s.style.setProperty("--i",i);
+    el.appendChild(s);
+  });
+  return [...el.children];
+}
+/* wrap each word in <w><i>…</i></w> preserving inline <em> */
+function splitWords(root){
+  const out=[];
+  const walk=node=>{
+    [...node.childNodes].forEach(n=>{
+      if(n.nodeType===3){
+        const frag=document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach(tok=>{
+          if(!tok)return;
+          if(/^\s+$/.test(tok)){frag.appendChild(document.createTextNode(tok));return;}
+          const w=document.createElement("w"),i=document.createElement("i");
+          i.textContent=tok; w.appendChild(i); frag.appendChild(w); out.push(i);
+        });
+        node.replaceChild(frag,n);
+      } else if(n.nodeType===1) walk(n);
+    });
+  };
+  walk(root); return out;
+}
+
+/* ── hero wordmark: per-character variable weight follows cursor ─── */
+const wm=$("#wordmark");
+const wmChars=splitChars(wm,"HELIOGRAPH");
+wmChars.forEach((c,i)=>{ c.style.transition="transform 1.1s cubic-bezier(.22,1,.36,1)";
+  c.style.transform="translateY(110%)"; c.style.transitionDelay=(0.03*i)+"s"; });
+function revealWordmark(){ wmChars.forEach(c=>c.style.transform="none"); }
+
+let wmBoxes=[];
+function layout(){
+  wmBoxes = wmChars.map(c=>{const r=c.getBoundingClientRect();
+    return {el:c,cx:r.left+r.width/2,cy:r.top+r.height/2};});
+  if(typeof buildScore==="function") buildScore();
+}
+function tickWordmark(){
+  if(!wmBoxes.length||RM||!M.seen)return;
+  const heroTop=$("#hero").getBoundingClientRect().top;
+  if(heroTop<-S.vh||heroTop>S.vh)return;
+  for(const b of wmBoxes){
+    const d=Math.hypot(M.x-b.cx,M.y-b.cy);
+    const k=1-smoothstep(0,Math.max(320,S.vw*0.26),d);
+    const w=lerp(230,760,k), soft=lerp(14,88,k), op=lerp(144,14,k*0.55);
+    b.el.style.fontVariationSettings=`"opsz" ${op.toFixed(0)},"wght" ${w.toFixed(0)},"SOFT" ${soft.toFixed(0)},"WONK" 1`;
+  }
+}
+
+/* ── live readouts ───────────────────────────────────────────────── */
+const rClock=$("#r-clock"), rPlate=$("#r-plate"), rSee=$("#r-see"), rWolf=$("#r-wolf"), rFlux=$("#r-flux");
+let rSeed=0;
+function tickReadouts(t){
+  const d=new Date();
+  rClock.textContent = [d.getUTCHours(),d.getUTCMinutes(),d.getUTCSeconds()]
+    .map(n=>String(n).padStart(2,"0")).join(":")+" UTC";
+  if(t-rSeed>1400){
+    rSeed=t;
+    rSee.textContent=(1.6+Math.random()*1.1).toFixed(1)+"″";
+    rWolf.textContent=(128+Math.round(Math.random()*22));
+    rFlux.textContent=(158+Math.random()*13).toFixed(1);
+  }
+}
+
+/* ── B. THE STAR ─────────────────────────────────────────────────
+   Volumetric raymarched corona + analytic photosphere, then a
+   five-pass post chain: bright → blur ×2 scales → composite with
+   chromatic aberration, ACES tonemap, vignette, grain, and the
+   archive halftone transfer.
+   ──────────────────────────────────────────────────────────────── */
+const VERT=`#version 300 es
+void main(){vec2 p=vec2(float((gl_VertexID<<1)&2),float(gl_VertexID&2));gl_Position=vec4(p*2.0-1.0,0.0,1.0);}`;
+
+const F_SCENE=`#version 300 es
+precision highp float;
+out vec4 O;
+uniform vec2 uRes; uniform float uTime; uniform vec4 uSun;
+uniform float uEclipse, uEnergy; uniform vec2 uMouse; uniform int uSteps;
+
+float h11(float n){return fract(sin(n)*43758.5453123);}
+float h21(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
+float n3(vec3 x){
+  vec3 p=floor(x),f=fract(x); f=f*f*(3.0-2.0*f);
+  float n=p.x+p.y*157.0+113.0*p.z;
+  return mix(mix(mix(h11(n),h11(n+1.0),f.x),mix(h11(n+157.0),h11(n+158.0),f.x),f.y),
+             mix(mix(h11(n+113.0),h11(n+114.0),f.x),mix(h11(n+270.0),h11(n+271.0),f.x),f.y),f.z);
+}
+const mat3 RT=mat3(0.00,0.80,0.60,-0.80,0.36,-0.48,-0.60,-0.48,0.64);
+float fbm(vec3 p,int oct){
+  float a=0.5,s=0.0,m=0.0;
+  for(int i=0;i<6;i++){ if(i>=oct)break; s+=a*n3(p); m+=a; p=RT*p*2.02; a*=0.5; }
+  return s/m;
+}
+vec3 pal(float t){
+  t=clamp(t,0.0,1.3);
+  vec3 c=mix(vec3(0.20,0.028,0.008),vec3(0.72,0.14,0.02),smoothstep(0.0,0.30,t));
+  c=mix(c,vec3(1.00,0.42,0.055),smoothstep(0.26,0.55,t));
+  c=mix(c,vec3(1.00,0.72,0.26),smoothstep(0.50,0.78,t));
+  c=mix(c,vec3(1.00,0.93,0.74),smoothstep(0.74,0.96,t));
+  c=mix(c,vec3(1.00,1.00,0.97),smoothstep(0.94,1.18,t));
+  return c;
+}
+mat3 rotY(float a){float s=sin(a),c=cos(a);return mat3(c,0.0,-s,0.0,1.0,0.0,s,0.0,c);}
+mat3 rotZ(float a){float s=sin(a),c=cos(a);return mat3(c,-s,0.0,s,c,0.0,0.0,0.0,1.0);}
+
+float coronaD(vec3 q,float t){
+  float r=length(q);
+  if(r<1.0) return 0.0;
+  vec3 dir=q/r;
+  float ang=fbm(dir*2.15+vec3(0.0,0.0,t*0.014),4);
+  float fine=fbm(q*2.85+vec3(0.0,0.0,-t*0.05),3);
+  float fall=exp(-(r-1.0)*2.45);
+  float streak=pow(clamp(ang*1.42,0.0,1.0),2.3);
+  float base=fall*(0.20+1.02*streak)*(0.48+0.52*fine);
+  float pa=atan(dir.y,dir.x);
+  float prom=exp(-pow((r-1.075)/0.082,2.0))
+            *pow(max(0.0,sin(pa*3.0+t*0.055+fine*2.2)),10.0)*1.65;
+  return base+prom;
+}
+
+vec3 starfield(vec2 p,float t){
+  vec3 acc=vec3(0.0);
+  for(int L=0;L<2;L++){
+    float sc=(L==0)?78.0:142.0;
+    vec2 g=p*sc; vec2 id=floor(g); vec2 f=fract(g)-0.5;
+    float hh=h21(id+float(L)*17.3);
+    float on=step(0.978,hh);
+    vec2 off=(vec2(h21(id+3.1),h21(id+7.7))-0.5)*0.72;
+    float d=length(f-off);
+    float tw=0.55+0.45*sin(t*1.6+hh*63.0);
+    float b=on*exp(-d*d*(L==0?300.0:520.0))*tw*(L==0?1.0:0.55);
+    acc+=b*mix(vec3(0.78,0.84,1.0),vec3(1.0,0.88,0.68),h21(id+2.3));
+  }
+  float band=fbm(vec3(p*3.4,0.7),4);
+  acc+=vec3(0.030,0.033,0.052)*smoothstep(0.42,0.86,band);
+  return acc;
+}
+
+void main(){
+  vec2 pix=(gl_FragCoord.xy-0.5*uRes)/uRes.y;
+  float R=max(uSun.z,0.0001);
+  vec2 d=pix-uSun.xy;
+  float rr=length(d)/R;
+
+  vec3 ro=vec3(d/R,4.0);
+  vec3 rd=normalize(vec3(d/R*0.085,-1.0));
+
+  // photosphere -------------------------------------------------
+  vec3 col=vec3(0.0);
+  float discMask=0.0;
+  float b=dot(ro,rd), cc=dot(ro,ro)-1.0, disc=b*b-cc;
+  float tDisc=1e9;
+  if(disc>0.0){
+    tDisc=-b-sqrt(disc);
+    vec3 P=ro+rd*tDisc;
+    vec3 N=normalize(P);
+    float mu=clamp(dot(N,-rd),0.0,1.0);
+    mat3 rot=rotZ(0.13)*rotY(uTime*0.011);
+    vec3 sp=rot*N;
+    float gran=fbm(sp*24.0+vec3(0.0,0.0,uTime*0.085),4);
+    float sgran=fbm(sp*6.6-vec3(0.0,0.0,uTime*0.028),3);
+    float spots=fbm(sp*3.05+vec3(11.3,4.1,2.7),3);
+    float umbra=smoothstep(0.665,0.760,spots);
+    float pen=smoothstep(0.600,0.668,spots)*(1.0-umbra);
+    float br=0.70+0.36*gran+0.20*sgran;
+    br*=pow(max(mu,0.0),0.60);
+    br*=1.0-0.86*umbra-0.34*pen;
+    br+=0.18*(1.0-mu)*smoothstep(0.50,0.72,sgran);
+    br+=0.10*pow(1.0-mu,3.0);
+    col+=pal(br)*(br*2.35);
+    discMask=1.0;
+  }
+
+  // corona volume ----------------------------------------------
+  float B=4.4;
+  float cb=dot(ro,rd), c2=dot(ro,ro)-B*B, dd=cb*cb-c2;
+  vec3 cor=vec3(0.0);
+  if(dd>0.0){
+    float sd=sqrt(dd);
+    float t0=max(-cb-sd,0.0), t1=min(-cb+sd, tDisc);
+    if(t1>t0){
+      int steps=uSteps;
+      float dt=(t1-t0)/float(steps);
+      float jit=h21(gl_FragCoord.xy+uTime)*dt;
+      float t=t0+jit;
+      for(int i=0;i<72;i++){
+        if(i>=steps)break;
+        vec3 q=ro+rd*t;
+        float den=coronaD(q,uTime);
+        if(den>0.0015){
+          float r=length(q);
+          vec3 e=mix(vec3(1.0,0.70,0.30),vec3(1.0,0.30,0.09),clamp((r-1.0)/2.3,0.0,1.0));
+          e=mix(e,vec3(1.0,0.95,0.86),exp(-(r-1.0)*6.5)*0.85);
+          cor+=e*den*dt;
+        }
+        t+=dt;
+      }
+    }
+  }
+
+  // eclipse -----------------------------------------------------
+  float ecl=uEclipse;
+  if(ecl>0.001){
+    vec2 mc=uSun.xy+vec2(mix(-3.0,3.0,ecl),mix(0.60,-0.48,ecl)*0.30)*R;
+    float Rm=R*1.018;
+    float md=length(pix-mc);
+    float moon=1.0-smoothstep(Rm*0.990,Rm*1.010,md);
+    float cover=1.0-smoothstep(0.0,1.0,abs(ecl-0.5)*3.3);
+    col*=(1.0-moon);
+    cor*=(1.0-moon*0.994);
+    cor*=1.0+3.4*cover;
+    // chromosphere ring at the moon's edge
+    float chr=exp(-pow((md-Rm)/(R*0.013),2.0))*cover;
+    cor+=vec3(1.0,0.24,0.30)*chr*2.6;
+    discMask=max(discMask*(1.0-moon),moon);
+  }
+
+  col+=cor;
+
+  // background --------------------------------------------------
+  float occl=clamp(discMask+smoothstep(2.9,1.0,rr)*0.85,0.0,1.0);
+  col+=starfield(pix,uTime)*(1.0-occl);
+
+  // faint aureole so bloom has a base to lift
+  col+=pal(0.42)*0.020*exp(-max(rr-1.0,0.0)*1.5);
+
+  O=vec4(max(col,0.0),1.0);
+}`;
+
+const F_BRIGHT=`#version 300 es
+precision highp float; out vec4 O;
+uniform sampler2D uTex; uniform vec2 uTexel; uniform float uThresh;
+void main(){
+  vec2 uv=gl_FragCoord.xy*uTexel;
+  vec2 e=uTexel*1.0;
+  vec3 c=(texture(uTex,uv+e*vec2(-1.0,-1.0)).rgb+texture(uTex,uv+e*vec2(1.0,-1.0)).rgb
+         +texture(uTex,uv+e*vec2(-1.0,1.0)).rgb+texture(uTex,uv+e*vec2(1.0,1.0)).rgb)*0.25;
+  float l=dot(c,vec3(0.2126,0.7152,0.0722));
+  O=vec4(c*max(l-uThresh,0.0)/max(l,1e-4),1.0);
+}`;
+
+const F_BLUR=`#version 300 es
+precision highp float; out vec4 O;
+uniform sampler2D uTex; uniform vec2 uTexel; uniform vec2 uDir;
+void main(){
+  vec2 uv=gl_FragCoord.xy*uTexel;
+  vec2 o=uDir*uTexel;
+  vec3 s=texture(uTex,uv).rgb*0.2270270270;
+  s+=(texture(uTex,uv+o*1.3846153846).rgb+texture(uTex,uv-o*1.3846153846).rgb)*0.3162162162;
+  s+=(texture(uTex,uv+o*3.2307692308).rgb+texture(uTex,uv-o*3.2307692308).rgb)*0.0702702703;
+  O=vec4(s,1.0);
+}`;
+
+const F_COMP=`#version 300 es
+precision highp float; out vec4 O;
+uniform sampler2D uScene,uBloomA,uBloomB;
+uniform vec2 uRes; uniform float uTime,uMode,uEnergy,uIntro,uBloom,uEclipse;
+vec3 aces(vec3 x){
+  const float a=2.51,b=0.03,c=2.43,d=0.59,e=0.14;
+  return clamp((x*(a*x+b))/(x*(c*x+d)+e),0.0,1.0);
+}
+float h21(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
+void main(){
+  vec2 uv=gl_FragCoord.xy/uRes;
+  vec2 q=uv-0.5;
+  float r2=dot(q,q);
+
+  // chromatic aberration — grows toward the edges and with scroll energy
+  float ab=(0.0016+uEnergy*0.0075)*(0.35+r2*3.2)*(1.0-uMode*0.55);
+  vec3 sc;
+  sc.r=texture(uScene,uv-q*ab).r;
+  sc.g=texture(uScene,uv).g;
+  sc.b=texture(uScene,uv+q*ab).b;
+
+  vec3 bl=texture(uBloomA,uv).rgb*0.95+texture(uBloomB,uv).rgb*0.80;
+  float bs=uBloom*mix(1.0,0.22,uMode)*(1.0+uEclipse*0.55);
+  vec3 col=sc+bl*bs;
+
+  // vertical smear on fast scroll
+  if(uEnergy>0.02){
+    vec3 sm=texture(uScene,uv+vec2(0.0,uEnergy*0.012)).rgb
+           +texture(uScene,uv-vec2(0.0,uEnergy*0.012)).rgb;
+    col=mix(col,col*0.62+sm*0.30,clamp(uEnergy*1.5,0.0,0.55));
+  }
+
+  col=aces(col*1.02);
+  col*=1.0-smoothstep(0.16,0.85,r2)*mix(0.62,0.30,uMode);   // vignette
+
+  // ── archive transfer: negative silver plate, halftone-screened
+  if(uMode>0.001){
+    float lum=dot(col,vec3(0.2126,0.7152,0.0722));
+    // A plate has a toe and a shoulder. The toe drops faint corona onto bare
+    // paper; the shoulder stops the disc from clogging to solid black, so its
+    // granulation and spots survive as tone the screen can actually render.
+    float ink=0.86*pow(smoothstep(0.030,1.05,lum),0.85);
+    float a=0.404;                      // screen angle
+    vec2 rp=vec2(gl_FragCoord.x*cos(a)-gl_FragCoord.y*sin(a),
+                 gl_FragCoord.x*sin(a)+gl_FragCoord.y*cos(a));
+    float pitch=3.14159265/2.2;
+    float scr=(sin(rp.x*pitch)*sin(rp.y*pitch))*0.5+0.5;
+    float dotv=smoothstep(scr-0.19,scr+0.19,ink);
+    float tone=mix(ink,dotv,0.58);
+    vec3 paper=vec3(0.910,0.882,0.827);
+    vec3 inkc =vec3(0.085,0.072,0.052);
+    vec3 arch=mix(paper,inkc,clamp(tone*0.96,0.0,1.0));
+    // a breath of plate-blue in the deepest tones
+    arch=mix(arch,arch*vec3(0.94,0.97,1.06),tone*0.5);
+    col=mix(col,arch,uMode);
+  }
+
+  // grain
+  float g=h21(gl_FragCoord.xy+fract(uTime)*137.0)-0.5;
+  col+=g*mix(0.030,0.055,uMode);
+
+  // intro reveal — an aperture opening
+  float ap=smoothstep(0.0,1.0,uIntro);
+  col*=ap;
+  col=mix(col,col*1.0,1.0);
+  O=vec4(col,1.0);
+}`;
+
+const Star={ok:false};
+(function initGL(){
+  const cv=$("#gl");
+  const gl=cv.getContext("webgl2",{antialias:false,alpha:false,depth:false,stencil:false,
+                                   powerPreference:"high-performance",preserveDrawingBuffer:false});
+  if(!gl){ html.classList.add("no-gl"); return; }
+  const hasF16 = !!gl.getExtension("EXT_color_buffer_half_float") || !!gl.getExtension("EXT_color_buffer_float");
+  gl.getExtension("OES_texture_float_linear");
+
+  function sh(type,src){
+    const s=gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s);
+    if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)){
+      console.error("shader:",gl.getShaderInfoLog(s)); return null;
+    } return s;
+  }
+  function prog(fs){
+    const p=gl.createProgram(); const v=sh(gl.VERTEX_SHADER,VERT), f=sh(gl.FRAGMENT_SHADER,fs);
+    if(!v||!f)return null;
+    gl.attachShader(p,v); gl.attachShader(p,f); gl.linkProgram(p);
+    if(!gl.getProgramParameter(p,gl.LINK_STATUS)){console.error("link:",gl.getProgramInfoLog(p));return null;}
+    const u={}; const n=gl.getProgramParameter(p,gl.ACTIVE_UNIFORMS);
+    for(let i=0;i<n;i++){const info=gl.getActiveUniform(p,i);u[info.name]=gl.getUniformLocation(p,info.name);}
+    return {p,u};
+  }
+  const P={scene:prog(F_SCENE),bright:prog(F_BRIGHT),blur:prog(F_BLUR),comp:prog(F_COMP)};
+  if(!P.scene||!P.bright||!P.blur||!P.comp){ html.classList.add("no-gl"); return; }
+
+  const vao=gl.createVertexArray(); gl.bindVertexArray(vao);
+
+  function makeRT(w,h,float){
+    const tex=gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D,tex);
+    const ifmt = float&&hasF16 ? gl.RGBA16F : gl.RGBA8;
+    const type = float&&hasF16 ? gl.HALF_FLOAT : gl.UNSIGNED_BYTE;
+    gl.texImage2D(gl.TEXTURE_2D,0,ifmt,w,h,0,gl.RGBA,type,null);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+    const fb=gl.createFramebuffer();
+    gl.bindFramebuffer(gl.FRAMEBUFFER,fb);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,tex,0);
+    gl.bindFramebuffer(gl.FRAMEBUFFER,null);
+    return {tex,fb,w,h};
+  }
+  function delRT(rt){ if(!rt)return; gl.deleteTexture(rt.tex); gl.deleteFramebuffer(rt.fb); }
+
+  let RTs={}, W=0,H=0, quality=1;
+  function resize(){
+    const dpr=Math.min(devicePixelRatio||1,1.6);
+    const w=Math.max(2,Math.round(innerWidth*dpr*quality*0.92));
+    const h=Math.max(2,Math.round(innerHeight*dpr*quality*0.92));
+    if(w===W&&h===H)return;
+    W=w;H=h;
+    cv.width=Math.round(innerWidth*dpr); cv.height=Math.round(innerHeight*dpr);
+    Object.values(RTs).forEach(delRT);
+    const q4w=Math.max(2,w>>2), q4h=Math.max(2,h>>2);
+    const q8w=Math.max(2,w>>3), q8h=Math.max(2,h>>3);
+    RTs={
+      scene:makeRT(w,h,true),
+      a:makeRT(q4w,q4h,true), b:makeRT(q4w,q4h,true),
+      c:makeRT(q8w,q8h,true), d:makeRT(q8w,q8h,true)
+    };
+  }
+  function bindRT(rt){
+    if(rt){gl.bindFramebuffer(gl.FRAMEBUFFER,rt.fb);gl.viewport(0,0,rt.w,rt.h);}
+    else {gl.bindFramebuffer(gl.FRAMEBUFFER,null);gl.viewport(0,0,cv.width,cv.height);}
+  }
+  const tri=()=>gl.drawArrays(gl.TRIANGLES,0,3);
+  function tex(unit,t){gl.activeTexture(gl.TEXTURE0+unit);gl.bindTexture(gl.TEXTURE_2D,t);}
+
+  /* uniform state driven by the page */
+  const U={sunX:0.26,sunY:0.02,sunR:0.30,eclipse:0,energy:0,intro:0,bloom:1.0,steps:44};
+
+  let frames=0,acc=0,lastT=performance.now();
+  function render(now){
+    resize();
+    const dt=Math.min(now-lastT,50); lastT=now; acc+=dt; frames++;
+    if(frames>=90){
+      const avg=acc/frames; acc=0; frames=0;
+      if(avg>25&&quality>0.6){quality=Math.max(0.6,quality-0.16);W=0;U.steps=34;}
+      else if(avg<13&&quality<1){quality=Math.min(1,quality+0.10);W=0;}
+    }
+    const t=now*0.001;
+
+    // ── scene
+    bindRT(RTs.scene);
+    gl.useProgram(P.scene.p);
+    gl.uniform2f(P.scene.u.uRes,RTs.scene.w,RTs.scene.h);
+    gl.uniform1f(P.scene.u.uTime,t);
+    gl.uniform4f(P.scene.u.uSun,U.sunX,U.sunY,U.sunR,0);
+    gl.uniform1f(P.scene.u.uEclipse,U.eclipse);
+    gl.uniform1f(P.scene.u.uEnergy,U.energy);
+    gl.uniform2f(P.scene.u.uMouse,M.nx,M.ny);
+    gl.uniform1i(P.scene.u.uSteps,U.steps);
+    tri();
+
+    // ── bright pass
+    bindRT(RTs.a);
+    gl.useProgram(P.bright.p);
+    tex(0,RTs.scene.tex); gl.uniform1i(P.bright.u.uTex,0);
+    gl.uniform2f(P.bright.u.uTexel,1/RTs.scene.w,1/RTs.scene.h);
+    gl.uniform1f(P.bright.u.uThresh,0.62);
+    tri();
+
+    // ── blur: tight (quarter) then wide (eighth)
+    gl.useProgram(P.blur.p);
+    const blur=(src,dst,dx,dy)=>{
+      bindRT(dst); tex(0,src.tex); gl.uniform1i(P.blur.u.uTex,0);
+      gl.uniform2f(P.blur.u.uTexel,1/dst.w,1/dst.h);
+      gl.uniform2f(P.blur.u.uDir,dx,dy); tri();
+    };
+    blur(RTs.a,RTs.b,1,0); blur(RTs.b,RTs.a,0,1);
+    blur(RTs.a,RTs.c,2.2,0); blur(RTs.c,RTs.d,0,2.2);
+    blur(RTs.d,RTs.c,3.4,0); blur(RTs.c,RTs.d,0,3.4);
+
+    // ── composite
+    bindRT(null);
+    gl.useProgram(P.comp.p);
+    tex(0,RTs.scene.tex); gl.uniform1i(P.comp.u.uScene,0);
+    tex(1,RTs.a.tex);     gl.uniform1i(P.comp.u.uBloomA,1);
+    tex(2,RTs.d.tex);     gl.uniform1i(P.comp.u.uBloomB,2);
+    gl.uniform2f(P.comp.u.uRes,cv.width,cv.height);
+    gl.uniform1f(P.comp.u.uTime,t);
+    gl.uniform1f(P.comp.u.uMode,MODE.v);
+    gl.uniform1f(P.comp.u.uEnergy,U.energy);
+    gl.uniform1f(P.comp.u.uIntro,U.intro);
+    gl.uniform1f(P.comp.u.uBloom,U.bloom);
+    gl.uniform1f(P.comp.u.uEclipse,U.eclipse);
+    tri();
+  }
+  Star.ok=true; Star.U=U; Star.render=render;
+  cv.addEventListener("webglcontextlost",e=>{e.preventDefault();Star.ok=false;html.classList.add("no-gl");});
+})();
+
+/* ── choreography ─────────────────────────────────────────────────
+   The star is a character with a mark in every scene. Its poses are
+   pinned to real section geometry, so the blocking survives any
+   change in content length. x/y are in half-viewport-height units
+   from the centre; +y is up.
+   ──────────────────────────────────────────────────────────────── */
+const SCORE=[
+  ["#hero",       0.46, { x: 0.70, y: 0.26, r:0.300, bloom:1.00, ecl:0    }],
+  ["#manifesto",  0.50, { x: 0.64, y:-0.30, r:0.115, bloom:0.95, ecl:0    }],
+  ["#instrument", 0.46, { x: 0.82, y: 0.36, r:0.070, bloom:0.70, ecl:0    }],
+  ["#spectrum",   0.50, { x: 0.88, y:-0.32, r:0.100, bloom:0.72, ecl:0    }],
+  ["#field",      0.30, { x: 0.00, y:-0.86, r:0.620, bloom:1.05, ecl:0    }],
+  ["#field",      0.62, { x: 0.00, y:-0.94, r:0.660, bloom:1.05, ecl:0    }],
+  ["#field",      0.96, { x: 0.42, y:-0.52, r:0.230, bloom:0.85, ecl:0    }],
+  ["#cycle",      0.50, { x: 0.84, y: 0.36, r:0.072, bloom:0.62, ecl:0    }],
+  ["#plates",     0.44, { x: 0.90, y:-0.38, r:0.052, bloom:0.40, ecl:0    }],
+  ["#totality",   0.14, { x: 0.00, y: 0.30, r:0.215, bloom:1.15, ecl:0.055}],
+  ["#totality",   0.56, { x: 0.00, y: 0.30, r:0.225, bloom:1.60, ecl:0.50 }],
+  ["#colophon",   0.28, { x: 0.00, y: 0.86, r:0.210, bloom:0.95, ecl:0.93 }]
+];
+let ANCH=[];
+function buildScore(){
+  ANCH=SCORE.map(([sel,f,pose])=>{
+    const el=document.querySelector(sel); if(!el)return null;
+    const r=el.getBoundingClientRect();
+    return {y:r.top+scrollY+r.height*f, pose};
+  }).filter(Boolean).sort((a,b)=>a.y-b.y);
+}
+const smoother=t=>t*t*t*(t*(t*6-15)+10);
+function sampleScore(centreY){
+  if(!ANCH.length)return SCORE[0][2];
+  if(centreY<=ANCH[0].y)return ANCH[0].pose;
+  const last=ANCH[ANCH.length-1];
+  if(centreY>=last.y)return last.pose;
+  let i=0; while(i<ANCH.length-2 && centreY>ANCH[i+1].y) i++;
+  const a=ANCH[i], b=ANCH[i+1], t=smoother(inv(a.y,b.y,centreY));
+  const A=a.pose,B=b.pose;
+  return {x:lerp(A.x,B.x,t), y:lerp(A.y,B.y,t), r:lerp(A.r,B.r,t),
+          bloom:lerp(A.bloom,B.bloom,t), ecl:lerp(A.ecl,B.ecl,t)};
+}
+
+/* ── C. THE SIGNATURE — solar spectrum, computed from wavelength ── */
+const LINES=[
+  {nm:393.37,el:"Calcium II",fr:"K", d:0.95,w:1.5},
+  {nm:396.85,el:"Calcium II",fr:"H", d:0.92,w:1.4},
+  {nm:410.17,el:"Hydrogen δ",fr:"h", d:0.62,w:0.8},
+  {nm:430.79,el:"Iron · Calcium",fr:"G",d:0.80,w:1.1},
+  {nm:434.05,el:"Hydrogen γ",fr:"G′",d:0.66,w:0.8},
+  {nm:486.13,el:"Hydrogen β",fr:"F", d:0.74,w:0.9},
+  {nm:495.76,el:"Iron",fr:"c", d:0.40,w:0.6},
+  {nm:518.36,el:"Magnesium",fr:"b₁",d:0.61,w:0.8},
+  {nm:526.96,el:"Iron",fr:"E", d:0.55,w:0.7},
+  {nm:588.99,el:"Sodium",fr:"D₂",d:0.79,w:0.6},
+  {nm:589.59,el:"Sodium",fr:"D₁",d:0.75,w:0.6},
+  {nm:627.66,el:"Oxygen · terrestrial",fr:"a",d:0.35,w:0.6},
+  {nm:656.28,el:"Hydrogen α",fr:"C", d:0.86,w:1.0},
+  {nm:686.72,el:"Oxygen · terrestrial",fr:"B",d:0.46,w:0.9},
+  {nm:759.37,el:"Oxygen · terrestrial",fr:"A",d:0.60,w:1.2}
+];
+const NM0=382, NM1=768;
+function wl2rgb(w){
+  let r=0,g=0,b=0;
+  if(w>=380&&w<440){r=-(w-440)/60;b=1;}
+  else if(w<490){g=(w-440)/50;b=1;}
+  else if(w<510){g=1;b=-(w-510)/20;}
+  else if(w<580){r=(w-510)/70;g=1;}
+  else if(w<645){r=1;g=-(w-645)/65;}
+  else if(w<=790){r=1;}
+  let f=1;
+  if(w>=380&&w<420)f=0.30+0.70*(w-380)/40;
+  else if(w>700&&w<=790)f=0.30+0.70*(790-w)/90;
+  else if(w<380)f=0;
+  const G=0.85;
+  return [Math.pow(Math.max(r,0)*f,G),Math.pow(Math.max(g,0)*f,G),Math.pow(Math.max(b,0)*f,G)];
+}
+function absorption(nm){
+  let a=0;
+  for(const L of LINES) a+=L.d*Math.exp(-Math.pow((nm-L.nm)/L.w,2));
+  // forest of weak metal lines
+  a+=0.10*Math.abs(Math.sin(nm*1.7))*Math.abs(Math.sin(nm*0.41))*smoothstep(700,430,nm);
+  return clamp(a,0,1);
+}
+function continuum(nm){ // Planck-ish 5772 K envelope, normalised
+  return clamp(0.30+0.86*Math.exp(-Math.pow((nm-505)/175,2)),0,1);
+}
+const specCv=$("#spec-canvas"); const sctx=specCv.getContext("2d");
+const SPEC={hover:-1, nm:656.28, active:false, w:0,h:0};
+function drawSpectrum(){
+  const r=specCv.getBoundingClientRect(); if(!r.width)return;
+  const dpr=Math.min(devicePixelRatio||1,2);
+  const w=SPEC.w=Math.round(r.width), h=SPEC.h=Math.round(r.height);
+  specCv.width=w*dpr; specCv.height=h*dpr;
+  sctx.setTransform(dpr,0,0,dpr,0,0);
+  const arc = MODE.target>0.5;
+  const bandH=Math.round(h*0.46), bandY=0, traceY=bandH+26, traceH=h-traceY-20;
+
+  sctx.clearRect(0,0,w,h);
+
+  // ── band
+  const img=sctx.createImageData(w,bandH);
+  for(let x=0;x<w;x++){
+    const nm=NM0+(x/(w-1))*(NM1-NM0);
+    const a=absorption(nm), c=continuum(nm);
+    let rgb=wl2rgb(nm);
+    const k=(1-a*0.97)*c;
+    for(let y=0;y<bandH;y++){
+      // vertical emulsion falloff, like a real plate
+      const vy=y/bandH;
+      const shade=0.78+0.30*Math.sin(vy*Math.PI);
+      let R,G,B;
+      if(arc){
+        const L=(0.2126*rgb[0]+0.7152*rgb[1]+0.0722*rgb[2]);
+        const v=clamp(Math.pow((1-a)*c*(0.35+0.65*L),0.75),0,1)*shade;
+        R=232-v*196; G=225-v*196; B=211-v*186;         // ink on paper, negative
+      }else{
+        R=rgb[0]*k*shade*255; G=rgb[1]*k*shade*255; B=rgb[2]*k*shade*255;
+      }
+      const i=(y*w+x)*4;
+      const n=(Math.random()-0.5)*(arc?16:12);
+      img.data[i]=clamp(R+n,0,255); img.data[i+1]=clamp(G+n,0,255);
+      img.data[i+2]=clamp(B+n,0,255); img.data[i+3]=255;
+    }
+  }
+  sctx.putImageData(img,0,0);
+
+  const css=getComputedStyle(html);
+  const inkC=css.getPropertyValue("--ink").trim();
+  const faint=css.getPropertyValue("--ink-faint").trim();
+  const accent=css.getPropertyValue("--accent").trim();
+
+  // ── labelled principal lines
+  sctx.font='500 9px "JetBrains Mono", monospace';
+  sctx.textAlign="center";
+  let lastLbl=-99;
+  LINES.forEach(L=>{
+    if(L.d<0.5)return;
+    const x=((L.nm-NM0)/(NM1-NM0))*w;
+    sctx.strokeStyle=arc?"rgba(23,19,13,.34)":"rgba(243,237,226,.30)";
+    sctx.lineWidth=1;
+    sctx.beginPath(); sctx.moveTo(x,bandY+bandH); sctx.lineTo(x,bandY+bandH+7); sctx.stroke();
+    // close pairs (the sodium doublet) share one mark rather than overprinting
+    if(x-lastLbl<13) return;
+    lastLbl=x;
+    sctx.fillStyle=faint;
+    sctx.fillText(L.fr.replace(/[₁₂]/,""),x,bandY+bandH+18);
+  });
+
+  // ── intensity trace
+  sctx.save();
+  sctx.beginPath();
+  for(let x=0;x<=w;x++){
+    const nm=NM0+(x/w)*(NM1-NM0);
+    const v=(1-absorption(nm))*continuum(nm);
+    const y=traceY+traceH-v*traceH;
+    x===0?sctx.moveTo(x,y):sctx.lineTo(x,y);
+  }
+  sctx.lineTo(w,traceY+traceH); sctx.lineTo(0,traceY+traceH); sctx.closePath();
+  const gr=sctx.createLinearGradient(0,traceY,0,traceY+traceH);
+  gr.addColorStop(0,arc?"rgba(23,19,13,.16)":"rgba(255,154,46,.22)");
+  gr.addColorStop(1,"rgba(0,0,0,0)");
+  sctx.fillStyle=gr; sctx.fill();
+  sctx.restore();
+
+  sctx.beginPath();
+  for(let x=0;x<=w;x++){
+    const nm=NM0+(x/w)*(NM1-NM0);
+    const v=(1-absorption(nm))*continuum(nm);
+    const y=traceY+traceH-v*traceH;
+    x===0?sctx.moveTo(x,y):sctx.lineTo(x,y);
+  }
+  sctx.strokeStyle=inkC; sctx.lineWidth=1; sctx.globalAlpha=.85; sctx.stroke(); sctx.globalAlpha=1;
+
+  // baseline + wavelength ticks
+  sctx.strokeStyle=arc?"rgba(23,19,13,.22)":"rgba(243,237,226,.14)";
+  sctx.beginPath(); sctx.moveTo(0,traceY+traceH+.5); sctx.lineTo(w,traceY+traceH+.5); sctx.stroke();
+  sctx.fillStyle=faint; sctx.textAlign="center";
+  for(let nm=400;nm<=750;nm+=50){
+    const x=((nm-NM0)/(NM1-NM0))*w;
+    sctx.beginPath(); sctx.moveTo(x,traceY+traceH); sctx.lineTo(x,traceY+traceH+4); sctx.stroke();
+    sctx.fillText(nm,x,traceY+traceH+15);
+  }
+
+  // ── scrubber
+  if(SPEC.hover>=0){
+    const x=SPEC.hover;
+    sctx.strokeStyle=accent; sctx.lineWidth=1;
+    sctx.beginPath(); sctx.moveTo(x+.5,0); sctx.lineTo(x+.5,traceY+traceH); sctx.stroke();
+    const nm=NM0+(x/w)*(NM1-NM0);
+    const v=(1-absorption(nm))*continuum(nm);
+    const y=traceY+traceH-v*traceH;
+    sctx.fillStyle=accent; sctx.beginPath(); sctx.arc(x,y,3.2,0,7); sctx.fill();
+    sctx.fillStyle=accent; sctx.textAlign=x>w-80?"right":"left";
+    sctx.fillText(nm.toFixed(2)+" nm", x>w-80?x-8:x+8, 13);
+  }
+}
+function specAt(clientX){
+  const r=specCv.getBoundingClientRect();
+  const x=clamp(clientX-r.left,0,r.width-1);
+  const nm=NM0+(x/(r.width-1))*(NM1-NM0);
+  let best=LINES[0],bd=1e9;
+  LINES.forEach(L=>{const d=Math.abs(L.nm-nm);if(d<bd){bd=d;best=L;}});
+  SPEC.hover=x;
+  const near = bd<4.5;
+  $("#s-wl").textContent=(near?best.nm:nm).toFixed(2);
+  $("#s-el").textContent=near?best.el:"Continuum";
+  $("#s-fr").textContent=near?best.fr:"—";
+  $("#s-dp").textContent=(near?best.d:absorption(nm)).toFixed(2);
+  if(near&&SPEC.lastLine!==best.fr){ SPEC.lastLine=best.fr; Sound.line(best.nm,best.d); }
+  if(!near)SPEC.lastLine=null;
+  drawSpectrum();
+}
+specCv.addEventListener("pointermove",e=>specAt(e.clientX));
+specCv.addEventListener("pointerdown",e=>{specCv.setPointerCapture(e.pointerId);specAt(e.clientX);});
+specCv.addEventListener("pointerleave",()=>{SPEC.hover=-1;SPEC.lastLine=null;drawSpectrum();});
+
+/* ── D. THE FIELD — curl-noise + dipole magnetic flow ────────────── */
+const fCv=$("#field-canvas"), fctx=fCv.getContext("2d",{alpha:true});
+const FIELD={w:0,h:0,parts:[],on:false,poles:[],mx:-9999,my:-9999,dpr:1,cx:0,cy:0,R:0};
+const fnoise=makeNoise(20250418);
+function fieldResize(){
+  const r=fCv.getBoundingClientRect(); if(!r.width||!r.height)return;
+  const dpr=FIELD.dpr=Math.min(devicePixelRatio||1,1.5);
+  FIELD.w=Math.round(r.width); FIELD.h=Math.round(r.height);
+  fCv.width=Math.round(r.width*dpr); fCv.height=Math.round(r.height*dpr);
+  fctx.setTransform(dpr,0,0,dpr,0,0);
+  FIELD.cx=r.width*0.5; FIELD.cy=r.height*1.50; FIELD.R=Math.max(r.width,r.height)*0.70;
+  // Magnetic poles seated just under the limb. Charges alternate and sum to
+  // zero, so the lines close back onto the surface as arcades instead of
+  // escaping — a net charge would read as wind, not field.
+  FIELD.poles=[];
+  const base=-Math.PI/2;
+  const seat=(a,rad,q)=>FIELD.poles.push({
+    x:FIELD.cx+Math.cos(a)*FIELD.R*rad, y:FIELD.cy+Math.sin(a)*FIELD.R*rad, q});
+  for(let i=0;i<8;i++) seat(base+(i-3.5)*0.238, 0.965, (i%2?1:-1)*1.30);
+  seat(base-0.98,0.945,-2.20); seat(base+0.98,0.945, 2.20);   // one tall helmet streamer
+  const target=Math.round(clamp(r.width*r.height/1050,1000,3400));
+  FIELD.parts=Array.from({length:target},()=>spawnP(true));
+  fctx.clearRect(0,0,r.width,r.height);
+}
+function spawnP(any){
+  const a=-Math.PI/2+(Math.random()-0.5)*2.05;
+  const rr=FIELD.R*(any?(0.98+Math.random()*0.55):(0.995+Math.random()*0.05));
+  return {x:FIELD.cx+Math.cos(a)*rr, y:FIELD.cy+Math.sin(a)*rr,
+          px:0,py:0, life:0, max:200+Math.random()*320, s:0.5+Math.random()*0.9};
+}
+function fieldVec(x,y){
+  let bx=0,by=0;
+  for(const p of FIELD.poles){
+    const dx=x-p.x, dy=y-p.y;
+    const d2=dx*dx+dy*dy+900;
+    const k=p.q*26000/d2;
+    bx+=k*dx/Math.sqrt(d2); by+=k*dy/Math.sqrt(d2);
+  }
+  // cursor as a roving pole
+  if(FIELD.mx>-9000){
+    const dx=x-FIELD.mx, dy=y-FIELD.my, d2=dx*dx+dy*dy+1600;
+    const k=-52000/d2;
+    bx+=k*dx/Math.sqrt(d2); by+=k*dy/Math.sqrt(d2);
+  }
+  // curl noise turbulence
+  const s=0.0034, e=1.2;
+  const n1=fnoise((x+e)*s,y*s)-fnoise((x-e)*s,y*s);
+  const n2=fnoise(x*s,(y+e)*s)-fnoise(x*s,(y-e)*s);
+  bx+=n2*140; by+=-n1*140;
+  const m=Math.hypot(bx,by)||1;
+  return [bx/m,by/m,m];
+}
+const fieldSec=$("#field");
+function fieldStep(){
+  const fr=fieldSec.getBoundingClientRect();
+  FIELD.on = fr.bottom>-120 && fr.top<S.vh+120;
+  if(!FIELD.on)return;
+  if(!FIELD.w||FIELD.h!==Math.round(fr.height)) fieldResize();
+  if(!FIELD.w)return;
+  const arc=MODE.target>0.5;
+  // fade toward TRANSPARENT, never toward an opaque plate
+  fctx.globalCompositeOperation="destination-out";
+  fctx.fillStyle="rgba(0,0,0,0.030)";
+  fctx.fillRect(0,0,FIELD.w,FIELD.h);
+  fctx.lineWidth=arc?0.9:1.05;
+  fctx.globalCompositeOperation=arc?"source-over":"lighter";
+  for(const p of FIELD.parts){
+    p.px=p.x; p.py=p.y;
+    const [vx,vy,m]=fieldVec(p.x,p.y);
+    const sp=1.70*p.s;
+    p.x+=vx*sp; p.y+=vy*sp; p.life++;
+    const dxc=p.x-FIELD.cx, dyc=p.y-FIELD.cy;
+    const inside=Math.hypot(dxc,dyc)<FIELD.R*0.985;
+    if(p.life>p.max||inside||p.x<-60||p.x>FIELD.w+60||p.y<-140||p.y>FIELD.h+80){
+      Object.assign(p,spawnP(false)); continue;
+    }
+    const age=p.life/p.max;
+    const fade=Math.sin(Math.min(age,1)*Math.PI);
+    const heat=clamp(m/260,0,1);
+    if(arc){
+      fctx.strokeStyle=`rgba(23,19,13,${(0.42*fade).toFixed(3)})`;
+    }else{
+      const R=255, G=Math.round(120+120*heat), B=Math.round(40+150*heat*heat);
+      fctx.strokeStyle=`rgba(${R},${G},${B},${(0.60*fade).toFixed(3)})`;
+    }
+    fctx.beginPath(); fctx.moveTo(p.px,p.py); fctx.lineTo(p.x,p.y); fctx.stroke();
+  }
+  fctx.globalCompositeOperation="source-over";
+}
+$("#field").addEventListener("pointermove",e=>{
+  const r=fCv.getBoundingClientRect(); FIELD.mx=e.clientX-r.left; FIELD.my=e.clientY-r.top;
+},{passive:true});
+$("#field").addEventListener("pointerleave",()=>{FIELD.mx=-9999;FIELD.my=-9999;});
+
+/* ── E. THE CYCLE — 276 years of sunspot number ──────────────────── */
+const CYC={data:[],prog:0,hover:-1,w:0,h:0,pad:{l:52,r:18,t:26,b:34}};
+(function buildCycle(){
+  const rnd=mulberry(18740403);
+  let year=1749, phase=0;
+  const envelope=y=>{
+    let a=1;
+    a*=0.55+0.45*smoothstep(1700,1780,y);
+    a*=1-0.52*Math.exp(-Math.pow((y-1815)/22,2));       // Dalton minimum
+    a*=1+0.42*Math.exp(-Math.pow((y-1958)/34,2));       // Modern maximum
+    a*=1-0.30*Math.exp(-Math.pow((y-1902)/16,2));
+    a*=1-0.34*smoothstep(1995,2020,y);                  // recent decline
+    return a;
+  };
+  while(year<=2025){
+    const len=10.0+rnd()*2.4;
+    const amp=(78+rnd()*95)*envelope(year+len/2);
+    const skew=0.30+rnd()*0.12;
+    for(let m=0;m<Math.round(len*4);m++){
+      const t=m/(len*4);
+      const s=t<skew ? Math.pow(t/skew,1.5) : Math.pow(1-(t-skew)/(1-skew),2.1);
+      const y=year+t*len;
+      if(y>2025.4)break;
+      const v=Math.max(0,amp*s+(rnd()-0.42)*15*(0.35+s));
+      CYC.data.push({y,v});
+    }
+    year+=len; phase++;
+  }
+})();
+const CYMAX=Math.max(...CYC.data.map(d=>d.v))*1.06;
+const cyCv=$("#cyc-canvas"), cyx=cyCv.getContext("2d");
+const CYTIP=$("#cyc-tip");
+function drawCycle(){
+  const r=cyCv.getBoundingClientRect(); if(!r.width)return;
+  const dpr=Math.min(devicePixelRatio||1,2);
+  const w=CYC.w=Math.round(r.width), h=CYC.h=Math.round(r.height);
+  cyCv.width=w*dpr; cyCv.height=h*dpr; cyx.setTransform(dpr,0,0,dpr,0,0);
+  cyx.clearRect(0,0,w,h);
+  const P=CYC.pad, iw=w-P.l-P.r, ih=h-P.t-P.b;
+  const css=getComputedStyle(html);
+  const inkC=css.getPropertyValue("--ink").trim();
+  const faint=css.getPropertyValue("--ink-faint").trim();
+  const accent=css.getPropertyValue("--accent").trim();
+  const cak=css.getPropertyValue("--cak").trim();
+  const ruleC=MODE.target>0.5?"rgba(23,19,13,.14)":"rgba(243,237,226,.09)";
+  const X=y=>P.l+((y-1749)/(2025-1749))*iw;
+  const Y=v=>P.t+ih-(v/CYMAX)*ih;
+
+  cyx.font='400 9px "JetBrains Mono", monospace';
+  // grid
+  cyx.strokeStyle=ruleC; cyx.lineWidth=1; cyx.fillStyle=faint;
+  cyx.textAlign="right"; cyx.textBaseline="middle";
+  for(let v=0;v<=250;v+=50){
+    const y=Y(v); if(y<P.t-2)continue;
+    cyx.beginPath();cyx.moveTo(P.l,y+.5);cyx.lineTo(w-P.r,y+.5);cyx.stroke();
+    cyx.fillText(v,P.l-9,y);
+  }
+  cyx.textAlign="center"; cyx.textBaseline="top";
+  for(let y=1750;y<=2020;y+=50){
+    const x=X(y);
+    cyx.beginPath();cyx.moveTo(x+.5,P.t);cyx.lineTo(x+.5,P.t+ih);cyx.stroke();
+    cyx.fillText(y,x,P.t+ih+9);
+  }
+
+  const cut=P.l+iw*CYC.prog;
+  cyx.save();
+  cyx.beginPath(); cyx.rect(P.l-1,P.t-6,Math.max(0,cut-P.l+1),ih+12); cyx.clip();
+
+  // area
+  cyx.beginPath(); cyx.moveTo(X(CYC.data[0].y),Y(0));
+  CYC.data.forEach(d=>cyx.lineTo(X(d.y),Y(d.v)));
+  cyx.lineTo(X(CYC.data[CYC.data.length-1].y),Y(0)); cyx.closePath();
+  const g=cyx.createLinearGradient(0,P.t,0,P.t+ih);
+  g.addColorStop(0,MODE.target>0.5?"rgba(140,58,30,.28)":"rgba(255,154,46,.30)");
+  g.addColorStop(1,"rgba(0,0,0,0)");
+  cyx.fillStyle=g; cyx.fill();
+
+  // line
+  cyx.beginPath();
+  CYC.data.forEach((d,i)=>{const x=X(d.y),y=Y(d.v); i?cyx.lineTo(x,y):cyx.moveTo(x,y);});
+  cyx.strokeStyle=accent; cyx.lineWidth=1.1; cyx.stroke();
+
+  // maxima markers
+  cyx.fillStyle=cak;
+  for(let i=2;i<CYC.data.length-2;i++){
+    const d=CYC.data[i];
+    if(d.v>CYC.data[i-1].v&&d.v>CYC.data[i+1].v&&d.v>0.55*CYMAX&&d.v>CYC.data[i-2].v&&d.v>CYC.data[i+2].v){
+      cyx.beginPath(); cyx.arc(X(d.y),Y(d.v),2.4,0,7); cyx.fill();
+    }
+  }
+  cyx.restore();
+
+  // institute record marker
+  const xi=X(1874);
+  cyx.setLineDash([3,4]); cyx.strokeStyle=MODE.target>0.5?"rgba(23,19,13,.45)":"rgba(243,237,226,.34)";
+  cyx.beginPath(); cyx.moveTo(xi+.5,P.t-4); cyx.lineTo(xi+.5,P.t+ih); cyx.stroke(); cyx.setLineDash([]);
+  cyx.fillStyle=faint; cyx.textAlign="left"; cyx.textBaseline="alphabetic";
+  cyx.fillText("FIRST PLATE 1874",xi+6,P.t+7);
+
+  // annotations
+  const ann=[{y:1859,t:"CARRINGTON"},{y:1816,t:"DALTON MIN."},{y:1958,t:"MODERN MAX."}];
+  cyx.textAlign="center";
+  ann.forEach(a=>{
+    const x=X(a.y); if(x>cut+4)return;
+    cyx.strokeStyle=MODE.target>0.5?"rgba(23,19,13,.30)":"rgba(243,237,226,.22)";
+    cyx.setLineDash([2,3]);
+    cyx.beginPath(); cyx.moveTo(x+.5,P.t+12); cyx.lineTo(x+.5,P.t+ih); cyx.stroke();
+    cyx.setLineDash([]);
+    cyx.fillStyle=css.getPropertyValue("--ink-dim").trim(); cyx.fillText(a.t,x,P.t+8);
+  });
+
+  // hover
+  if(CYC.hover>=0){
+    const yr=1749+((CYC.hover-P.l)/iw)*(2025-1749);
+    let best=CYC.data[0],bd=1e9;
+    CYC.data.forEach(d=>{const dd=Math.abs(d.y-yr);if(dd<bd){bd=dd;best=d;}});
+    const x=X(best.y), y=Y(best.v);
+    cyx.strokeStyle=accent; cyx.lineWidth=1;
+    cyx.beginPath(); cyx.moveTo(x+.5,P.t); cyx.lineTo(x+.5,P.t+ih); cyx.stroke();
+    cyx.fillStyle=accent; cyx.beginPath(); cyx.arc(x,y,3.4,0,7); cyx.fill();
+    CYTIP.style.opacity="1";
+    CYTIP.style.left=clamp(x,72,w-72)+"px"; CYTIP.style.top=Math.max(y,P.t+26)+"px";
+    $("#ct-y").textContent=Math.round(best.y); $("#ct-v").textContent=Math.round(best.v);
+  } else CYTIP.style.opacity="0";
+}
+cyCv.addEventListener("pointermove",e=>{
+  const r=cyCv.getBoundingClientRect();
+  CYC.hover=clamp(e.clientX-r.left,CYC.pad.l,r.width-CYC.pad.r); drawCycle();
+});
+cyCv.addEventListener("pointerleave",()=>{CYC.hover=-1;drawCycle();});
+
+/* ── F. THE ARCHIVE — six plates, drawn pixel by pixel ───────────── */
+const PLATES=[
+  {id:"quiet",  type:"white",  title:"Quiet Disc",        band:"White light 550 nm", date:"14 · VI · 1889",
+   no:"04 271", keeper:"M. Oyarzun", exp:"1/80 s", see:"1.8″", seed:1889,
+   desc:"A morning of almost nothing. Two small groups near the equator, a disc otherwise clean enough that the keeper noted only the weather."},
+  {id:"halpha", type:"halpha", title:"Chromosphere",      band:"Hα 656.3 nm",        date:"02 · IX · 1937",
+   no:"18 902", keeper:"R. Calvo",   exp:"1/12 s", see:"2.4″", seed:1937,
+   desc:"Hydrogen alone. The filaments are cooler gas suspended above the surface — dark only because they are seen against something brighter."},
+  {id:"cak",    type:"cak",    title:"Calcium Network",   band:"Ca II K 393.4 nm",   date:"27 · III · 1958",
+   no:"27 664", keeper:"A. Verdú",   exp:"1/6 s",  see:"1.5″", seed:1958,
+   desc:"The magnetic skeleton, made visible. Each bright cell wall is a boundary where the field has been swept aside and piled up."},
+  {id:"mag",    type:"mag",    title:"Magnetogram",       band:"Fe I 525.0 nm",      date:"11 · XI · 1979",
+   no:"36 118", keeper:"J. Ferrán",  exp:"48 s",   see:"2.0″", seed:1979,
+   desc:"Not light but polarity. White is field leaving the star, black is field returning. Every pair was once a single rope, pushed up from below."},
+  {id:"corona", type:"corona", title:"Coronagraph",       band:"Occulted · 1.05 R☉", date:"08 · V · 1994",
+   no:"44 507", keeper:"L. Amat",    exp:"9 s",    see:"1.9″", seed:1994,
+   desc:"The disc blocked by a metal cone so the thin light around it can be seen at all. Streamers this long usually mean the field is about to reverse."},
+  {id:"total",  type:"eclipse",title:"Totality, 1905",    band:"Naked eye · 3ᵐ 46ˢ", date:"30 · VIII · 1905",
+   no:"09 003", keeper:"H. Lindqvist",exp:"4 s",   see:"—",    seed:1905,
+   desc:"The Institute's only plate made away from the island. Four seconds of exposure, carried back from Burgos in a wooden box, still the finest corona we hold."}
+];
+const PTONE={
+  white:  [[18,13,9],  [255,240,209]],
+  halpha: [[28,6,4],   [255,142,98]],
+  cak:    [[7,11,22],  [188,221,255]],
+  mag:    [[9,9,12],   [238,238,242]],
+  corona: [[5,7,13],   [255,208,152]],
+  eclipse:[[2,2,5],    [238,234,255]]
+};
+const PTONE_ARC=[[44,32,20],[236,229,214]];
+
+function plateValue(type,u,v,n,t){
+  const r=Math.hypot(u,v);
+  const mu=r<1?Math.sqrt(1-r*r):0;
+  const st=1+(1-mu)*1.15;                 // limb stretch, fakes the sphere
+  const su=u*st, sv=v*st;
+  if(type==="corona"||type==="eclipse"){
+    const occ=type==="eclipse"?1.0:1.06;
+    if(r<occ) return type==="eclipse"?0.02:0.05+0.03*fbm2(n,u*9,v*9,2);
+    const ang=Math.atan2(v,u);
+    const rn=r/occ;
+    const angN=fbm2(n,Math.cos(ang)*2.2+9,Math.sin(ang)*2.2+9,4);
+    const fine=fbm2(n,su*3.4,sv*3.4,4);
+    const fall=Math.exp(-(rn-1)*(type==="eclipse"?1.30:1.60));
+    let val=fall*(0.20+1.15*Math.pow(clamp(angN*1.5,0,1),2.0))*(0.5+0.5*fine);
+    if(type==="eclipse"){
+      const ring=Math.exp(-Math.pow((rn-1.014)/0.024,2));
+      val+=ring*0.60;
+    }
+    return clamp(val*(type==="corona"?2.15:1.55),0,1);
+  }
+  if(r>=1){
+    const glow=Math.exp(-(r-1)*11)*(type==="halpha"?0.30:0.18);
+    return clamp(glow,0,1);
+  }
+  const limb=Math.pow(mu,0.58);
+  if(type==="white"){
+    const gran=fbm2(n,su*34,sv*34,4);
+    const sg=fbm2(n,su*8,sv*8,3);
+    const sp=fbm2(n,su*3.4+4,sv*3.4+4,3);
+    const umb=smoothstep(0.20,0.30,sp), pen=smoothstep(0.13,0.21,sp)*(1-umb);
+    let b=0.70+0.30*gran+0.16*sg;
+    b*=limb; b*=1-0.88*umb-0.36*pen;
+    b+=0.10*(1-mu)*smoothstep(0.05,0.24,sg);
+    return clamp(b,0,1);
+  }
+  if(type==="halpha"){
+    const fib=fbm2(n,su*30+Math.sin(sv*7)*0.8,sv*11,4);
+    const plage=fbm2(n,su*6.5+2,sv*6.5+2,3);
+    const fil=fbm2(n,su*5.2-7,sv*13-7,4);
+    const filament=smoothstep(0.16,0.26,Math.abs(fil))*0;
+    let b=0.56+0.34*fib+0.30*smoothstep(0.06,0.26,plage);
+    b*=limb*0.92+0.10;
+    b-=0.52*smoothstep(0.20,0.30,fil);              // dark filaments
+    b+=0.22*Math.exp(-Math.pow((r-0.985)/0.02,2));  // spicule rim
+    return clamp(b,0,1);
+  }
+  if(type==="cak"){
+    const net=Math.abs(fbm2(n,su*13,sv*13,4));
+    const cell=1-smoothstep(0.02,0.16,net);
+    const plage=smoothstep(0.08,0.28,fbm2(n,su*4.2+3,sv*4.2+3,3));
+    let b=0.34+0.46*(1-cell)+0.40*plage;
+    b*=limb*0.85+0.16;
+    return clamp(b,0,1);
+  }
+  if(type==="mag"){
+    const a=fbm2(n,su*4.6,sv*4.6,4), b2=fbm2(n,su*11+5,sv*11+5,3);
+    let s=(a*2.4+b2*0.7);
+    s=Math.sign(s)*Math.pow(Math.abs(s),0.75);
+    let b=0.5+clamp(s,-1,1)*0.5;
+    b=0.5+(b-0.5)*(0.35+0.65*limb);
+    return clamp(b,0,1);
+  }
+  return 0;
+}
+function renderPlate(cv,spec,px){
+  const dpr=Math.min(devicePixelRatio||1,2);
+  const W=Math.round(px*dpr);
+  cv.width=W; cv.height=W;
+  const ctx=cv.getContext("2d");
+  const N=Math.min(360,Math.max(220,Math.round(W*0.62)));
+  const off=document.createElement("canvas"); off.width=off.height=N;
+  const octx=off.getContext("2d");
+  const img=octx.createImageData(N,N);
+  const n=makeNoise(spec.seed);
+  const arc=MODE.target>0.5;
+  const tone=arc?PTONE_ARC:PTONE[spec.type];
+  const [s0,s1]=tone;
+  const isWide=spec.type==="corona"||spec.type==="eclipse";
+  const scale=isWide?0.30:0.385;
+  const jx=(mulberry(spec.seed)()-0.5)*0.05, jy=(mulberry(spec.seed+7)()-0.5)*0.05;
+  const rnd=mulberry(spec.seed*3+1);
+  for(let y=0;y<N;y++){
+    for(let x=0;x<N;x++){
+      const u=(x/N-0.5-jx)/scale, v=(y/N-0.5-jy)/scale;
+      let val=plateValue(spec.type,u,v,n,0);
+      // plate vignette + emulsion falloff
+      const rr=Math.hypot(x/N-0.5,y/N-0.5)*1.42;
+      val*=1-smoothstep(0.55,1.05,rr)*0.55;
+      val+=0.030*(1-smoothstep(0.2,0.9,rr));
+      // grain
+      val+=(rnd()-0.5)*(arc?0.085:0.075);
+      val=clamp(val,0,1);
+      const g=Math.pow(val,arc?0.92:0.95);
+      const i=(y*N+x)*4;
+      if(arc){
+        img.data[i]  =s1[0]+(s0[0]-s1[0])*g*0;
+        img.data[i]  =Math.round(lerp(s1[0],s0[0],1-g));
+        img.data[i+1]=Math.round(lerp(s1[1],s0[1],1-g));
+        img.data[i+2]=Math.round(lerp(s1[2],s0[2],1-g));
+      }else{
+        img.data[i]  =Math.round(lerp(s0[0],s1[0],g));
+        img.data[i+1]=Math.round(lerp(s0[1],s1[1],g));
+        img.data[i+2]=Math.round(lerp(s0[2],s1[2],g));
+      }
+      img.data[i+3]=255;
+    }
+  }
+  octx.putImageData(img,0,0);
+  ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality="high";
+  ctx.clearRect(0,0,W,W);
+  ctx.drawImage(off,0,0,W,W);
+
+  // ── emulsion damage, drawn at display resolution
+  const d=mulberry(spec.seed+31);
+  ctx.save();
+  ctx.globalCompositeOperation=arc?"multiply":"lighter";
+  for(let i=0;i<7;i++){                         // scratches
+    const x0=d()*W,y0=d()*W,len=W*(0.10+d()*0.5),a=d()*Math.PI;
+    ctx.strokeStyle=arc?`rgba(60,44,26,${0.05+d()*0.08})`:`rgba(255,246,225,${0.035+d()*0.06})`;
+    ctx.lineWidth=0.5+d()*0.9;
+    ctx.beginPath(); ctx.moveTo(x0,y0);
+    ctx.lineTo(x0+Math.cos(a)*len,y0+Math.sin(a)*len); ctx.stroke();
+  }
+  for(let i=0;i<34;i++){                        // dust
+    const x=d()*W,y=d()*W,rr=0.4+d()*1.9;
+    ctx.fillStyle=arc?`rgba(38,28,18,${0.10+d()*0.16})`:`rgba(0,0,0,${0.20+d()*0.3})`;
+    ctx.beginPath(); ctx.arc(x,y,rr,0,7); ctx.fill();
+  }
+  ctx.restore();
+
+  // corner registration marks + scratched number
+  ctx.save();
+  ctx.strokeStyle=arc?"rgba(40,30,18,.42)":"rgba(255,244,220,.30)";
+  ctx.lineWidth=Math.max(1,W*0.0035);
+  const m=W*0.045,L=W*0.035;
+  [[m,m,1,1],[W-m,m,-1,1],[m,W-m,1,-1],[W-m,W-m,-1,-1]].forEach(([x,y,sx,sy])=>{
+    ctx.beginPath(); ctx.moveTo(x,y+sy*L); ctx.lineTo(x,y); ctx.lineTo(x+sx*L,y); ctx.stroke();
+  });
+  ctx.font=`${Math.round(W*0.030)}px "JetBrains Mono", monospace`;
+  ctx.fillStyle=arc?"rgba(40,30,18,.55)":"rgba(255,240,214,.42)";
+  ctx.textAlign="right"; ctx.textBaseline="bottom";
+  ctx.fillText("№ "+spec.no, W-m-2, W-m-2);
+  ctx.textAlign="left";
+  ctx.fillText(spec.date, m+2, W-m-2);
+  ctx.restore();
+}
+
+const grid=$("#plate-grid");
+PLATES.forEach((s,i)=>{
+  const b=document.createElement("button");
+  b.className="plate"; b.dataset.i=i; b.dataset.cur="Open plate";
+  b.innerHTML=`<span class="band">${s.band}</span>
+    <span class="frame"><canvas></canvas></span>
+    <span class="cap"><span class="t">${s.title}</span><span class="d mono">${s.date}</span></span>`;
+  grid.appendChild(b);
+});
+const plateCanvases=$$("#plate-grid canvas");
+function drawAllPlates(){
+  plateCanvases.forEach((cv,i)=>{
+    const r=cv.getBoundingClientRect();
+    renderPlate(cv,PLATES[i],Math.max(160,Math.round(r.width||300)));
+  });
+  if(LB.open) renderPlate($("#lb-frame canvas"),PLATES[LB.i],520);
+}
+
+let plateQueue=0,plateTimer=0;
+function schedulePlates(){
+  clearTimeout(plateTimer);
+  plateTimer=setTimeout(()=>{                 // let the transition land first
+    plateQueue=0;
+    (function step(){
+      if(plateQueue>=plateCanvases.length){ if(LB.open)renderPlate($("#lb-frame canvas"),PLATES[LB.i],520); return; }
+      const cv=plateCanvases[plateQueue], r=cv.getBoundingClientRect();
+      renderPlate(cv,PLATES[plateQueue],Math.max(220,Math.round(r.width||320)));
+      plateQueue++; requestAnimationFrame(step);
+    })();
+  },560);
+}
+
+/* lightbox + View Transitions */
+const LB={open:false,i:0};
+const lbEl=$("#lightbox"), lbFrame=$("#lb-frame");
+lbFrame.innerHTML="<canvas></canvas>";
+/* Two elements may never share a view-transition-name. If a transition stalls
+   the old name can linger, so every entry point starts from a clean slate. */
+function clearVT(){
+  $$("#plate-grid .frame").forEach(f=>f.style.viewTransitionName="");
+  lbFrame.style.viewTransitionName="";
+}
+function openPlate(i){
+  const spec=PLATES[i]; LB.i=i; clearVT();
+  const run=()=>{
+    LB.open=true; lbEl.classList.add("on");
+    $("#lb-title").textContent=spec.title; $("#lb-band").textContent=spec.band;
+    $("#lb-desc").textContent=spec.desc;   $("#lb-no").textContent=spec.no;
+    $("#lb-exp").textContent=spec.exp;     $("#lb-keep").textContent=spec.keeper;
+    $("#lb-see").textContent=spec.see;
+    renderPlate($("#lb-frame canvas"),spec,520);
+    lbFrame.style.viewTransitionName="plate-morph";
+  };
+  const src=$$("#plate-grid .frame")[i];
+  Sound.tick(392);
+  if(document.startViewTransition&&!RM){
+    try{
+      src.style.viewTransitionName="plate-morph";
+      const t=document.startViewTransition(()=>{src.style.viewTransitionName="";run();});
+      t.finished.finally(clearVT);
+      setTimeout(()=>{ if(!LB.open){clearVT();run();} },800);
+      return;
+    }catch(e){ clearVT(); }
+  }
+  run();
+}
+function closePlate(){
+  const src=$$("#plate-grid .frame")[LB.i];
+  const run=()=>{ LB.open=false; lbEl.classList.remove("on"); clearVT(); };
+  Sound.tick(294);
+  if(document.startViewTransition&&!RM){
+    try{
+      clearVT();
+      lbFrame.style.viewTransitionName="plate-morph";
+      const t=document.startViewTransition(()=>{run();src.style.viewTransitionName="plate-morph";});
+      t.finished.finally(clearVT);
+      setTimeout(()=>{ if(LB.open) run(); },800);
+      return;
+    }catch(e){ clearVT(); }
+  }
+  run();
+}
+grid.addEventListener("click",e=>{
+  const b=e.target.closest(".plate"); if(b)openPlate(+b.dataset.i);
+});
+$("#lb-close").addEventListener("click",closePlate);
+lbEl.addEventListener("click",e=>{if(e.target===lbEl)closePlate();});
+addEventListener("keydown",e=>{
+  if(e.key==="Escape"&&LB.open)closePlate();
+  if(LB.open&&(e.key==="ArrowRight"||e.key==="ArrowLeft")){
+    e.preventDefault();
+    LB.i=(LB.i+(e.key==="ArrowRight"?1:PLATES.length-1))%PLATES.length;
+    const spec=PLATES[LB.i];
+    $("#lb-title").textContent=spec.title; $("#lb-band").textContent=spec.band;
+    $("#lb-desc").textContent=spec.desc;   $("#lb-no").textContent=spec.no;
+    $("#lb-exp").textContent=spec.exp;     $("#lb-keep").textContent=spec.keeper;
+    $("#lb-see").textContent=spec.see;
+    renderPlate($("#lb-frame canvas"),spec,520);
+    Sound.tick(440);
+  }
+});
+
+/* ── the instrument, annotated ───────────────────────────────────── */
+const PARTS=[
+  ["Heliostat","A flat mirror on a polar axis, turned by a falling weight and a governor. It holds the sun still — the one thing in this building permitted to move, so that nothing else has to."],
+  ["Objective","254 mm of crown and flint, figured in Dublin in 1908 and never re-polished. It throws a solar image 23 mm across onto the first slit."],
+  ["Entrance slit","Twenty microns wide. Everything the Institute knows about the sun has passed through a gap you could not see edge-on."],
+  ["Collimator","Returns the diverging cone to parallel light, so that the prisms receive the beam the way the sky sent it."],
+  ["Prism train","Two dense flint prisms in minimum deviation. Here the light stops being white and admits what it is made of."],
+  ["Camera lens","Focuses one narrow colour — and only that colour — onto the plate. Change the angle and you change which element you are photographing."],
+  ["Plate cassette","Glass, gelatin, silver bromide. The slit and the plate travel together across the image; the sun is scanned, never simply snapped."]
+];
+const iTitle=$("#i-title"), iDesc=$("#i-desc"), iIdx=$("#i-idx"), iSwap=$("#i-swap"), iList=$("#i-list");
+PARTS.forEach((p,i)=>{
+  const b=document.createElement("button");
+  b.innerHTML=`<span class="n mono">${String(i+1).padStart(2,"0")}</span><span class="mono">${p[0]}</span>`;
+  b.addEventListener("click",()=>selectPart(i));
+  b.addEventListener("pointerenter",()=>selectPart(i));
+  iList.appendChild(b);
+});
+let curPart=-1;
+function selectPart(i){
+  if(i===curPart)return; curPart=i;
+  iIdx.textContent=`Part ${String(i+1).padStart(2,"0")} / 07`;
+  iTitle.textContent=PARTS[i][0]; iDesc.textContent=PARTS[i][1];
+  iSwap.classList.remove("swap"); void iSwap.offsetWidth; iSwap.classList.add("swap");
+  $$("#i-list button").forEach((b,j)=>b.classList.toggle("on",j===i));
+  $$(".callout").forEach(c=>c.classList.toggle("on",+c.dataset.i===i));
+  Sound.tick(660+i*40);
+}
+$$(".callout").forEach(c=>{
+  const go=()=>selectPart(+c.dataset.i);
+  c.addEventListener("pointerenter",go); c.addEventListener("click",go); c.addEventListener("focus",go);
+});
+/* measure each drawn path so the stroke-dash draw-on is exact */
+function primeInstrument(){
+  $$("#instr-svg .draw").forEach(el=>{
+    let len=0;
+    try{ len=el.getTotalLength?el.getTotalLength():0; }catch(e){}
+    if(!len){ try{ const bb=el.getBBox(); len=(bb.width+bb.height)*2.4; }catch(e){ len=420; } }
+    len=Math.ceil(len+2);
+    el.style.transition="none";
+    el.style.strokeDasharray=len;
+    el.style.strokeDashoffset=RM?0:len;
+  });
+}
+let instrDrawn=false;
+function drawInstrument(){
+  if(instrDrawn)return; instrDrawn=true;
+  $("#instr-svg").classList.add("drawn");
+  $$("#instr-svg .draw").forEach((el,i)=>{
+    setTimeout(()=>{ el.style.transition=""; el.style.strokeDashoffset="0"; }, 40+i*22);
+  });
+  selectPart(0);
+}
+new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting) drawInstrument(); });
+},{threshold:0.14}).observe($("#instrument"));
+
+/* ── manifesto: word-by-word rise, scrubbed by scroll ────────────── */
+const maniWords=splitWords($("#mani-text"));
+function tickManifesto(){
+  if(RM){ maniWords.forEach(w=>w.style.transform="none"); return; }
+  const sec=$("#manifesto"); const r=sec.getBoundingClientRect();
+  const p=inv(S.vh*0.92,S.vh*0.18,r.top);
+  const n=maniWords.length;
+  maniWords.forEach((w,i)=>{
+    const t=clamp((p*(n+9)-i)/7,0,1);
+    const e=easeOutCubic(t);
+    w.style.transform=`translateY(${((1-e)*104).toFixed(2)}%)`;
+  });
+}
+/* ── cycle chart scrub ───────────────────────────────────────────── */
+let cycVis=false;
+new IntersectionObserver(es=>{es.forEach(e=>cycVis=e.isIntersecting);},{threshold:0.05}).observe($("#cycle"));
+function tickCycle(){
+  if(!cycVis)return;
+  const r=$("#cycle").getBoundingClientRect();
+  const p=clamp(inv(S.vh*0.88,S.vh*0.10,r.top),0,1);
+  if(Math.abs(p-CYC.prog)>0.004){ CYC.prog=p; drawCycle(); }
+}
+
+/* ── G. PRELOADER ────────────────────────────────────────────────── */
+const pre=$("#pre"), preNum=$("#pre-num"), preStat=$("#pre-stat"), preCv=$("#precanvas");
+const preChars=splitChars($("#pre-word"),"HELIOGRAPH");
+const pctx=preCv.getContext("2d");
+const STAT=["Awaiting first light","Aligning the heliostat","Opening the slit to twenty microns",
+            "Compiling the photosphere","Drawing plate № 54 118","First light"];
+const LOAD={fonts:0,plates:0,gl:0,time:0,v:0,done:false,t0:performance.now()};
+function drawPre(p){
+  const r=preCv.getBoundingClientRect(); if(!r.width)return;
+  const dpr=Math.min(devicePixelRatio||1,2);
+  const w=Math.round(r.width),h=Math.round(r.height);
+  if(preCv.width!==w*dpr){preCv.width=w*dpr;preCv.height=h*dpr;}
+  pctx.setTransform(dpr,0,0,dpr,0,0);
+  pctx.clearRect(0,0,w,h);
+  const arc=html.dataset.mode==="archive";
+  const rev=Math.round(w*p);
+  const img=pctx.createImageData(Math.max(1,rev),h);
+  for(let x=0;x<rev;x++){
+    const nm=NM0+(x/(w-1))*(NM1-NM0);
+    const a=absorption(nm),c=continuum(nm),rgb=wl2rgb(nm);
+    const k=(1-a*0.95)*c;
+    for(let y=0;y<h;y++){
+      const sh=0.72+0.34*Math.sin((y/h)*Math.PI);
+      const i=(y*rev+x)*4;
+      const n=(Math.random()-0.5)*10;
+      if(arc){
+        const L=0.2126*rgb[0]+0.7152*rgb[1]+0.0722*rgb[2];
+        const v=clamp(Math.pow((1-a)*c*(0.35+0.65*L),0.75),0,1)*sh;
+        img.data[i]=232-v*196; img.data[i+1]=225-v*196; img.data[i+2]=211-v*186;
+      }else{
+        img.data[i]=clamp(rgb[0]*k*sh*255+n,0,255);
+        img.data[i+1]=clamp(rgb[1]*k*sh*255+n,0,255);
+        img.data[i+2]=clamp(rgb[2]*k*sh*255+n,0,255);
+      }
+      img.data[i+3]=255;
+    }
+  }
+  if(rev>0)pctx.putImageData(img,0,0);
+  pctx.strokeStyle=getComputedStyle(html).getPropertyValue("--rule").trim();
+  pctx.strokeRect(0.5,0.5,w-1,h-1);
+  if(p<1){
+    pctx.fillStyle=getComputedStyle(html).getPropertyValue("--ink").trim();
+    pctx.fillRect(rev-1,0,1.4,h);
+  }
+}
+
+/* animated grain texture, generated once */
+(function grain(){
+  const c=document.createElement("canvas"); c.width=c.height=140;
+  const x=c.getContext("2d"), d=x.createImageData(140,140);
+  for(let i=0;i<d.data.length;i+=4){
+    const v=Math.random()*255;
+    d.data[i]=d.data[i+1]=d.data[i+2]=v; d.data[i+3]=255;
+  }
+  x.putImageData(d,0,0);
+  $("#grain").style.backgroundImage=`url(${c.toDataURL()})`;
+})();
+
+/* ── MAIN LOOP ───────────────────────────────────────────────────── */
+const progEl=$("#prog"), grainEl=$("#grain");
+let prevSY=0, gframe=0;
+let lastNow=performance.now();
+function frame(now){
+  requestAnimationFrame(frame);
+  const dtn=clamp((now-lastNow)/16.667,0.2,4); lastNow=now;
+
+  /* scroll spring */
+  S.sy+=(S.y-S.sy)*(RM?1:1-Math.pow(0.885,dtn));
+  const dv=S.sy-prevSY; prevSY=S.sy;
+  S.vel=dv;
+  S.energy+= (Math.min(Math.abs(dv)/58,1)-S.energy)*(1-Math.pow(0.91,dtn));
+  S.p=clamp(S.y/S.max,0,1);
+  S.sp=clamp(S.sy/S.max,0,1);
+  progEl.style.transform=`scaleX(${S.sp})`;
+  Sound.energy(S.energy);
+
+  /* mode crossfade */
+  MODE.v+=(MODE.target-MODE.v)*(1-Math.pow(0.945,dtn));
+
+  /* cursor */
+  let tx=M.tx, ty=M.ty;
+  if(M.magnet){
+    const r=M.magnet.getBoundingClientRect();
+    const cx=r.left+r.width/2, cy=r.top+r.height/2;
+    tx=lerp(M.tx,cx,0.42); ty=lerp(M.ty,cy,0.42);
+    if(M.magnet.classList.contains("tog")){
+      M.magnet.style.transform=`translate(${((M.tx-cx)*0.22).toFixed(1)}px,${((M.ty-cy)*0.24).toFixed(1)}px)`;
+      M.magnet.__moved=1;
+    }
+  } else {
+    $$(".tog").forEach(t=>{ if(t.__moved){t.style.transform="";t.__moved=0;} });
+  }
+  const ck=1-Math.pow(0.78,dtn);
+  M.x+=(tx-M.x)*ck; M.y+=(ty-M.y)*ck;
+  cur.style.transform=`translate3d(${M.x.toFixed(1)}px,${M.y.toFixed(1)}px,0)`;
+
+  /* the star */
+  if(Star.ok){
+    const k=sampleScore(S.sy+S.vh*0.5);
+    const U=Star.U;
+    const drift=RM?0:1;
+    U.sunX=k.x + M.nx*0.012*drift;
+    U.sunY=k.y + M.ny*0.010*drift;
+    U.sunR=k.r; U.bloom=k.bloom; U.eclipse=k.ecl;
+    U.energy=S.energy;
+    U.intro=LOAD.v>=1?1:Math.pow(clamp(LOAD.v*1.25,0,1),1.6);
+    Star.render(now);
+  }
+
+  /* page pieces */
+  tickWordmark(); tickManifesto(); tickCycle(); tickReadouts(now);
+  fieldStep();
+
+  /* grain drift */
+  if(++gframe%2===0){
+    grainEl.style.transform=
+      `translate(${(Math.random()*14-7).toFixed(0)}px,${(Math.random()*14-7).toFixed(0)}px)`;
+  }
+
+  /* preloader */
+  if(!LOAD.done){
+    const el=now-LOAD.t0;
+    LOAD.time=clamp(el/2100,0,1);
+    let target=LOAD.fonts*0.24+LOAD.plates*0.34+LOAD.gl*0.14+LOAD.time*0.28;
+    if(el>7000) target=1;                       // failsafe on very slow hardware
+    LOAD.v+=(target-LOAD.v)*(1-Math.pow(0.91,dtn));
+    preNum.textContent=LOAD.v.toFixed(2);
+    preStat.textContent=STAT[Math.min(STAT.length-1,Math.floor(LOAD.v*STAT.length))];
+    drawPre(LOAD.v);
+    if(LOAD.v>0.985){ LOAD.done=true; finish(); }
+  }
+}
+
+function finish(){
+  preNum.textContent="1.00"; preStat.textContent="First light"; drawPre(1);
+  setTimeout(()=>{
+    pre.classList.add("out");
+    revealWordmark();
+    bindReveals();
+    setTimeout(()=>{ pre.style.display="none"; layout(); },1600);
+  },420);
+}
+
+/* ── BOOT ────────────────────────────────────────────────────────── */
+function boot(){
+  html.classList.add("cur-ready");
+  measure(); layout(); bindCursor(); primeInstrument();
+  fieldResize(); drawSpectrum(); drawCycle();
+
+  // stagger the preloader wordmark
+  preChars.forEach((c,i)=>{
+    c.style.transition="transform 1.0s cubic-bezier(.22,1,.36,1), opacity .7s";
+    c.style.transitionDelay=(0.045*i)+"s";
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      c.style.transform="none"; c.style.opacity="1";
+    }));
+  });
+  setTimeout(()=>pre.classList.add("go"),260);
+
+  // fonts
+  if(document.fonts&&document.fonts.ready){
+    document.fonts.ready.then(()=>{LOAD.fonts=1;layout();drawSpectrum();drawCycle();});
+    setTimeout(()=>{LOAD.fonts=1;},3000);
+  } else LOAD.fonts=1;
+
+  // plates — one per frame so the preloader keeps breathing
+  let pi=0;
+  (function next(){
+    if(pi>=plateCanvases.length){ LOAD.plates=1; return; }
+    const cv=plateCanvases[pi], r=cv.getBoundingClientRect();
+    renderPlate(cv,PLATES[pi],Math.max(220,Math.round(r.width||320)));
+    pi++; LOAD.plates=pi/plateCanvases.length;
+    requestAnimationFrame(()=>setTimeout(next,0));
+  })();
+
+  if(Star.ok) requestAnimationFrame(()=>{LOAD.gl=1;}); else LOAD.gl=1;
+
+  // resize plumbing
+  let rt;
+  const ro=new ResizeObserver(()=>{
+    clearTimeout(rt);
+    rt=setTimeout(()=>{ measure(); layout(); fieldResize(); drawSpectrum(); drawCycle(); drawAllPlates(); },220);
+  });
+  ro.observe(document.body);
+
+  requestAnimationFrame(frame);
+}
+if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",boot);
+else boot();
+
+new IntersectionObserver(es=>{
+  es.forEach(e=>$("#rail").classList.toggle("away",e.isIntersecting));
+},{threshold:0.02}).observe($("#colophon"));
+
+/* smooth anchor scrolling without hijacking the scrollbar */
+document.addEventListener("click",e=>{
+  const a=e.target.closest('a[href^="#"]'); if(!a)return;
+  const t=document.querySelector(a.getAttribute("href")); if(!t)return;
+  e.preventDefault();
+  t.scrollIntoView({behavior:RM?"auto":"smooth",block:"start"});
+  Sound.tick(523);
+});
+})();
+</script>
+</body>
+</html>
