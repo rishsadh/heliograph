@@ -31,9 +31,11 @@ There is a **Sound** toggle, off by default. When on, the audio is synthesised w
 
 ### Reduced motion
 
-If the browser reports `prefers-reduced-motion: reduce`, CSS transitions and animations are cut to near zero and the scroll reveals show immediately. The script skips the View Transitions and the smooth scroll. It also drops the wordmark weight ripple, the instrument draw-on and the cursor drift. The star shader and the field particles still animate, because the code does not gate them. See Limits.
+If the browser reports `prefers-reduced-motion: reduce`, CSS transitions and animations are cut to near zero and the scroll reveals show immediately. The script skips the View Transitions and the smooth scroll. It also drops the wordmark weight ripple, the instrument draw-on and the cursor drift.
 
-The file is 2,634 lines and about 128 KB.
+The render loop stops too. Once the loading screen is done, the page does not run a continuous animation frame loop. The star is drawn as a still with a frozen moment of its animation, and it is redrawn once when the scroll pose, the mode or the window size changes. The field is drawn as one settled still of its streamlines. The UTC clock in the bottom bar keeps ticking on a one second timer.
+
+The file is 2,690 lines and about 131 KB.
 
 ## Run it
 
@@ -57,11 +59,11 @@ I built it as a ceiling test for my coding agent: how far it could go on one sel
 
 - **Fonts need a network.** Fraunces, Inter and JetBrains Mono load from Google Fonts. Offline, the page falls back to Georgia and the system fonts, and the layout will shift. Nothing else is fetched.
 - **It is heavy on the GPU.** The star shader raymarches up to 44 steps per pixel and runs every frame, followed by a bloom chain of nine draw calls in total. The code lowers the render scale (to as low as 60 percent) and the step count (to 34) when frames run long, and caps pixel ratio at 1.6, but a weak or integrated GPU will still struggle.
-- **It never idles.** The render loop runs on every animation frame while the tab is visible, including when you are not scrolling.
+- **It does not idle on its own.** With normal motion settings the render loop runs on every animation frame while the tab is visible, including when you are not scrolling. With reduced motion it stops when the page is idle.
 - **The field and plates cost CPU.** While the Field section is on screen it moves between 1,000 and 3,400 particles on the CPU each frame. The spectrum is redrawn per pixel on every pointer move. The six plates are redrawn per pixel when you switch modes or resize.
 - **Software rendering is slow.** In headless Chromium with SwiftShader instead of a GPU, the loading screen took roughly a minute to clear. The loading screen has a seven second failsafe, but that clock helps little when frames arrive this slowly.
-- **Reduced motion is partial.** The star and the field keep moving under `prefers-reduced-motion`.
-- **Narrow screens overflow.** At 390 px wide the top bar is wider than the viewport, and the page scrolls sideways by about 48 px in my test. I have not tested on a real phone.
+- **Reduced motion is a still, not a slow version.** Under `prefers-reduced-motion` the star and the field are frozen frames, and the star follows the scroll position directly instead of easing toward it. I tested this with Playwright, not with assistive technology.
+- **Phones are untested on hardware.** At 360, 390 and 430 px wide the page does not scroll sideways in Chromium's mobile emulation. To fit, the top bar hides its "EST." label and the visible Sound label. I have not tried a real phone.
 - **The numbers are scenery.** The sunspot series is generated from a seeded random function shaped to look like a solar cycle. It is not the historical record. I have not audited the astronomy elsewhere on the page either, so do not cite it.
 - **No tests.** It is a single file with no test suite. I loaded it in Chromium at 1440 and 390 px wide and watched the console, which stayed clear of errors and warnings.
 
